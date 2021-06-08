@@ -7,7 +7,6 @@ function SecurityForm(props) {
     switch (props.type) {
       case "Log In":
         return;
-        break;
       case "Sign Up":
         return firestore.collection('users').add({
           username: event.target.username.value,
