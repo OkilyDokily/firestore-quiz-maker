@@ -2,18 +2,20 @@ import { useFirestore } from 'react-redux-firebase';
 function SecurityForm(props) {
   const firestore = useFirestore();
 
-  function fireStoreSecurity(event) {
-    event.preventDefault();
-    switch (props.type) {
-      case "Log In":
-        return;
-      case "Sign Up":
-        return firestore.collection('users').add({
-          username: event.target.username.value,
-          password: event.target.password.value
-        });
-      default:
-    }
+  function fireStoreSecurity(e) {
+    e.preventDefault();
+    console.log("ahhh")
+    console.log(e.target.username.value);
+    // switch (props.type) {
+    //   case "Log In":
+    //     return;
+    //   case "Sign Up":
+    //     return firestore.collection('users').add({
+    //       username: e.target.username.value,
+    //       password: e.target.password.value
+    //     }).then(docref=> console.log("success",docref));
+    //   default:
+    // }
   }
   return (
     <form>
@@ -26,7 +28,7 @@ function SecurityForm(props) {
         <label>Password</label>
         <input name="password" type="text" />
       </div>
-      <button onClick={() => fireStoreSecurity()}>{props.type}</button>
+      <button onSubmit={(e) => fireStoreSecurity(e)}>{props.type}</button>
     </form>
   )
 }
