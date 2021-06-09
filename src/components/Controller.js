@@ -4,20 +4,13 @@ import Dashboard from './Dashboard';
 import Quiz from './Quiz';
 import QuizMaker from './QuizMaker';
 import Header from './Header';
+import {useSelector} from 'react-redux';
 
 
-class Controller extends React.Component
+function Controller()
 {
-  constructor(props) {
-    super(props);
-    this.state = {
-      component:"Security",
-      signedIn:null
-    }
-  }
-
-  render(){
-    switch(this.state.component){
+    let component  = useSelector(state => state.interface.component);
+    switch(component){
 
     case "Security":
        return (
@@ -48,11 +41,7 @@ class Controller extends React.Component
           </React.Fragment>
         )
     default:
-
-    }
-   
-  }
-  
+    }  
 }
 
 

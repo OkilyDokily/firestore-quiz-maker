@@ -1,8 +1,11 @@
 import { firestoreReducer } from 'redux-firestore';
+import securityReducer from './security'
 import {combineReducers} from 'redux';
+import interfaceReducer from './interface';
 
 const rootReducer = combineReducers({
-  // new line of code below
+  interface: interfaceReducer,
+  security: securityReducer,
   firestore: firestoreReducer
 });
 
