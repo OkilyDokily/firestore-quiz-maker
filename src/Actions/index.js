@@ -13,3 +13,11 @@ export function changeComponent(component){
     component
   }
 }
+
+export function addRoute(username,id){
+  return {
+    type:a.ADD_ROUTE,
+    username,
+    id
+  }
+}

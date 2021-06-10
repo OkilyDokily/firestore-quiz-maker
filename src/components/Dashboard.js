@@ -10,6 +10,7 @@ function DashBoard(){
     <React.Fragment>
       <p>{loggedIn}'s Dashboard</p>
       <button onClick={()=> dispatch(a.changeComponent("QuizMaker"))}>Make a quiz</button>
+      <button onClick={() => dispatch(a.changeComponent("QuizList"))}>See your quizzes</button>
     </React.Fragment>
   )
 }

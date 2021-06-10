@@ -2,6 +2,7 @@ import * as a from '../Actions/ActionTypes'
 
 const inititalState = {
   component: "Security"
+  
 }
 
 function securityReducer(state = inititalState, action) {
