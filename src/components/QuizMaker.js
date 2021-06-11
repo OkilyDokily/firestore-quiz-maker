@@ -9,66 +9,68 @@ function QuizMaker() {
     e.preventDefault();
     const obj = {
       title: e.target.title.value,
-      question1:
-      {
-        question: e.target.Q1.value,
-        answers:
+      questions: {
+        0:
         {
-          A: e.target.A1.value,
-          B: e.target.B1.value,
-          C: e.target.C1.value,
-          D: e.target.D1.value
+          question: e.target.Q1.value,
+          answers:
+          {
+            0: e.target.A1.value,
+            1: e.target.B1.value,
+            2: e.target.C1.value,
+            3: e.target.D1.value
+          },
+          correct: e.target.CA1.value
         },
-        correct: e.target.CA1.value
-      },
-      question2:
-      {
-        question: e.target.Q2.value,
-        answers:
+        1:
         {
-          A: e.target.A2.value,
-          B: e.target.B2.value,
-          C: e.target.C2.value,
-          D: e.target.D2.value
+          question: e.target.Q2.value,
+          answers:
+          {
+            0: e.target.A2.value,
+            1: e.target.B2.value,
+            2: e.target.C2.value,
+            3: e.target.D2.value
+          },
+          correct: e.target.CA2.value
         },
-        correct: e.target.CA2.value
-      },
-      question3:
-      {
-        question: e.target.Q3.value,
-        answers:
+        2:
         {
-          A: e.target.A3.value,
-          B: e.target.B3.value,
-          C: e.target.C3.value,
-          D: e.target.D3.value
+          question: e.target.Q3.value,
+          answers:
+          {
+            0: e.target.A3.value,
+            1: e.target.B3.value,
+            2: e.target.C3.value,
+            3: e.target.D3.value
+          },
+          correct: e.target.CA3.value
         },
-        correct: e.target.CA3.value
-      },
-      question4:
-      {
-        question: e.target.Q4.value,
-        answers:
+        3:
         {
-          A: e.target.A4.value,
-          B: e.target.B4.value,
-          C: e.target.C4.value,
-          D: e.target.D4.value
+          question: e.target.Q4.value,
+          answers:
+          {
+            0: e.target.A4.value,
+            1: e.target.B4.value,
+            2: e.target.C4.value,
+            3: e.target.D4.value
+          },
+          correct: e.target.CA4.value
         },
-        correct: e.target.CA4.value
-      },
-      question5:
-      {
-        question: e.target.Q5.value,
-        answers:
+        4:
         {
-          A: e.target.A5.value,
-          B: e.target.B5.value,
-          C: e.target.C5.value,
-          D: e.target.D5.value
-        },
-        correct: e.target.CA5.value
-      }
+          question: e.target.Q5.value,
+          answers:
+          {
+            0: e.target.A5.value,
+            1: e.target.B5.value,
+            2: e.target.C5.value,
+            3: e.target.D5.value
+          },
+          correct: e.target.CA5.value
+        }}
+     
     }
     firestore.collection("quizzes" + username).add(obj);
 

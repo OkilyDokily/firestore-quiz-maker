@@ -15,6 +15,7 @@ import {
 function Controller() {
   let { user, id } = useParams();
   const dispatch = useDispatch();
+  
   useEffect(() => {
     if(user !== undefined && id !== undefined)
     {
