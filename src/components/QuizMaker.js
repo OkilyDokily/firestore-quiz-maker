@@ -1,6 +1,6 @@
 import React from 'react'
-import {useFirestore} from 'react-redux-firebase';
-import {useSelector} from 'react-redux';
+import { useFirestore } from 'react-redux-firebase';
+import { useSelector } from 'react-redux';
 
 function QuizMaker() {
   const firestore = useFirestore();
@@ -20,7 +20,7 @@ function QuizMaker() {
             2: e.target.C1.value,
             3: e.target.D1.value
           },
-          correct: e.target.CA1.value
+
         },
         1:
         {
@@ -32,7 +32,6 @@ function QuizMaker() {
             2: e.target.C2.value,
             3: e.target.D2.value
           },
-          correct: e.target.CA2.value
         },
         2:
         {
@@ -44,7 +43,6 @@ function QuizMaker() {
             2: e.target.C3.value,
             3: e.target.D3.value
           },
-          correct: e.target.CA3.value
         },
         3:
         {
@@ -56,7 +54,6 @@ function QuizMaker() {
             2: e.target.C4.value,
             3: e.target.D4.value
           },
-          correct: e.target.CA4.value
         },
         4:
         {
@@ -68,11 +65,24 @@ function QuizMaker() {
             2: e.target.C5.value,
             3: e.target.D5.value
           },
-          correct: e.target.CA5.value
-        }}
-     
+        }
+      }
+
     }
-    firestore.collection("quizzes" + username).add(obj);
+    firestore.collection("quizzes" + username).add(obj).then(doc => {
+      firestore.collection("answers" + username).add({
+        correlation: doc.id,
+        answers: {
+          0: e.target.CA1.value,
+          1: e.target.CA2.value,
+          2: e.target.CA3.value,
+          3: e.target.CA4.value,
+          4: e.target.CA5.value
+        }
+      });
+    }
+    );
+
 
   }
   return (
