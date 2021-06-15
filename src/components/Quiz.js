@@ -1,56 +1,63 @@
-import { useFirestoreConnect, isLoaded, actionTypes } from 'react-redux-firebase';
+import { useFirestoreConnect, isLoaded} from 'react-redux-firebase';
 import { useFirestore } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
-import React,{useState} from 'react';
+import React from 'react';
 import QuizResults from './QuizResults';
-import { firestore } from 'firebase';
-
 
 function Quiz() {
-  const [showResults, toggleResults] = useState(false);
   const firestore = useFirestore();
   const routeUser = useSelector(state => state.routing.username)
   const routeId = useSelector(state => state.routing.id)
   const loggedIn = useSelector(state => state.security.loggedIn);
-  
-  useFirestoreConnect([
-    { collection: 'quizzes' + routeUser, doc: routeId }
-  ]);
 
+  useFirestoreConnect([
+    { collection: 'quizzes' + routeUser, doc: routeId, storeAs: "quiz" },
+    { collection: "answers" + routeUser, where: [['correlation', '==', routeId]], storeAs: "answers" },
+    { collection: "submitted" + loggedIn, where: [['correlation', '==', routeId]], storeAs: "givenanswers" }
+  ]);
   const quiz = useSelector(
-    (state) => state.firestore.data["quizzes" + routeUser] && state.firestore.data["quizzes" + routeUser][routeId]
+    (state) => state.firestore.data["quiz"]
   )
-  let correctAnswers;
-  let givenAnswers = {};
-  function submitQuiz(e){
+  let correctAnswers = useSelector(
+    (state) => state.firestore.data["answers"]
+  )
+  let givenAnswers = useSelector(
+    (state) => state.firestore.data["givenanswers"]
+  )
+
+
+  function submitQuiz(e) {
     e.preventDefault();
-    correctAnswers = firestore.collection("answers" + routeUser).where("correlation", "==", routeId);
-    
     const selects = document.getElementsByTagName("SELECT");
-   
+
     [...selects].forEach(s => {
       givenAnswers[s.getAttribute("name")] = s.options[s.selectedIndex].value;
     })
-   
+
     firestore.collection("submitted" + loggedIn).add(
       {
-        correlation:routeId,
-        answers:givenAnswers
+        correlation: routeId,
+        answers: givenAnswers
       }
     )
-    toggleResults(true);
+
   }
 
-  
 
-  if(showResults=== true){
+  if (isLoaded(quiz) && isLoaded(correctAnswers) && isLoaded(givenAnswers) && givenAnswers !== null) {
+    const key = Object.keys(givenAnswers)[0];
+    const given = givenAnswers[key].answers;
+
+    const key2 = Object.keys(correctAnswers)[0];
+    const correct = correctAnswers[key2].answers;
+
     return (
       <React.Fragment>
-        <QuizResults quiz={quiz} correct={correctAnswers.answers} given={givenAnswers}/>
+        <QuizResults quiz={quiz} correct={correct} given={given} />
       </React.Fragment>
     )
   }
-  else if (isLoaded() && quiz !== undefined) {
+  else if (isLoaded(quiz) && isLoaded(correctAnswers) && isLoaded(givenAnswers)) {
     return (
       <React.Fragment>
         <form onSubmit={submitQuiz}>
