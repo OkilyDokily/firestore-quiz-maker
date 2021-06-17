@@ -15,6 +15,7 @@ function Quiz() {
     { collection: "answers" + routeUser, where: [['correlation', '==', routeId]], storeAs: "answers" },
     { collection: "submitted" + loggedIn, where: [['correlation', '==', routeId]], storeAs: "givenanswers" }
   ]);
+  
   const quiz = useSelector(
     (state) => state.firestore.data["quiz"]
   )
@@ -25,11 +26,10 @@ function Quiz() {
     (state) => state.firestore.data["givenanswers"]
   )
 
-
   function submitQuiz(e) {
     e.preventDefault();
     const selects = document.getElementsByTagName("SELECT");
-
+    givenAnswers = {};
     [...selects].forEach(s => {
       givenAnswers[s.getAttribute("name")] = s.options[s.selectedIndex].value;
     })
@@ -40,7 +40,6 @@ function Quiz() {
         answers: givenAnswers
       }
     )
-
   }
 
 
