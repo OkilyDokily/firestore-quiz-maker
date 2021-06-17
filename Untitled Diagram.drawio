@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2021-06-16T21:42:29.539Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36" etag="tYfhm0lrJqDw7IOEL-_H" version="14.7.7" type="github">
+<mxfile host="app.diagrams.net" modified="2021-06-17T20:41:03.515Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.101 Safari/537.36" etag="oLsYn8qkllWTb0HC3YRt" version="14.7.10" type="github">
   <diagram id="U5crEyMKDy2htWtxY-od" name="Page-1">
-    <mxGraphModel dx="1102" dy="582" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="883" dy="379" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -78,6 +78,12 @@
         </mxCell>
         <mxCell id="PUbpo0mT-dT6CF3Mdy4J-19" value="Header" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="50" y="100" width="760" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="DL5qkXbWW3SE2tU9UODd-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="240" y="360" width="120" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="DL5qkXbWW3SE2tU9UODd-2" value="YourQuizzes" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="275" y="390" width="40" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
