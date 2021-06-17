@@ -10,16 +10,8 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/:user/:id">
-          <div id="App">
-            <Controller/>
-          </div>
-        </Route>
-        <Route path="/">
-          <div id="App">
-            <Controller />
-          </div>
-        </Route>
+        <Route path="/:user/:id" component={Controller}/>
+        <Route path="/" component={Controller}/>
       </Switch>
     </Router>
    

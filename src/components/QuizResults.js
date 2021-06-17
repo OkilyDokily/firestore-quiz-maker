@@ -2,14 +2,12 @@ import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { useFirestore } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import React from 'react';
-import { firestore } from 'firebase';
-
 
 function QuizResults(props) {
   const firestore = useFirestore();
   const routeId = useSelector(state => state.routing.id)
   const loggedIn = useSelector(state => state.security.loggedIn);
-
+  const routeUser = useSelector(state => state.routing.username)
   useFirestoreConnect([
     {
       collection: 'results', where: [['correlation', '==', routeId], ['user', '==', loggedIn]], storeAs: "result"
@@ -25,7 +23,7 @@ function QuizResults(props) {
     const percentage = results.filter(x => x === true).length / results.length;
 
     if (result === null) {
-      firestore.collection("results").add({ result: percentage, user:loggedIn, correlation: routeId })
+      firestore.collection("results").add({ result: percentage, user:loggedIn, correlation: routeId,tester: routeUser,title:props.quiz.title})
     }
 
     return (percentage * 100)

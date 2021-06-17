@@ -3,7 +3,6 @@ import Security from './Security';
 import Dashboard from './Dashboard';
 import Quiz from './Quiz';
 import QuizMaker from './QuizMaker';
-import QuizList from './QuizList';
 import Header from './Header';
 import { useSelector,useDispatch } from 'react-redux';
 import * as a from '../Actions/index';
@@ -14,12 +13,19 @@ import {
 
 function Controller() {
   let { user, id } = useParams();
+
   const dispatch = useDispatch();
-  
+  let loggedIn = useSelector(state => state.security.loggedIn);
   useEffect(() => {
-    if(user !== undefined && id !== undefined)
+    if(user !== undefined && id !== undefined )
     {
       dispatch(a.addRoute(user,id));
+    }
+    if (loggedIn && user !== undefined && id !== undefined){
+      dispatch(a.changeComponent("Quiz"))
+    }
+    else if (loggedIn) {
+      dispatch(a.changeComponent("Dashboard"))
     }
   });
 
@@ -53,13 +59,6 @@ function Controller() {
         <React.Fragment>
           <Header />
           <QuizMaker />
-        </React.Fragment>
-      )
-    case "QuizList":
-      return (
-        <React.Fragment>
-          <Header />
-          <QuizList />
         </React.Fragment>
       )
     default:

@@ -3,7 +3,7 @@ import { useFirestore } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import React from 'react';
 import QuizResults from './QuizResults';
-
+import { Link } from "react-router-dom";
 function Quiz() {
   const firestore = useFirestore();
   const routeUser = useSelector(state => state.routing.username)
@@ -53,6 +53,11 @@ function Quiz() {
     return (
       <React.Fragment>
         <QuizResults quiz={quiz} correct={correct} given={given} />
+        <Link to="/">
+          <button type="button">
+            Exit Quiz
+          </button>
+        </Link>
       </React.Fragment>
     )
   }
@@ -88,6 +93,11 @@ function Quiz() {
           })}
           <button>Get Results</button>
         </form>
+        <Link to="/">
+          <button type="button">
+            Exit Quiz
+          </button>
+        </Link>
       </React.Fragment>
     )
   }
@@ -95,6 +105,11 @@ function Quiz() {
     return (
       <div>
         Loading...
+        <Link to="/">
+          <button type="button">
+            Exit Quiz
+          </button>
+        </Link>
       </div>
     )
   }

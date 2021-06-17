@@ -6,7 +6,7 @@ import * as  a from '../Actions/index'
 function SecurityForm(props) {
   const firestore = useFirestore();
   const dispatch = useDispatch();
-  const added = useSelector(state => state.routing.added)
+
 
   const fireStoreSecurity = (e) => {
     e.preventDefault();
@@ -19,13 +19,7 @@ function SecurityForm(props) {
             if (querySnapshot.size === 1) {
               querySnapshot.forEach((doc) => {
                 dispatch(a.logIn(doc.data().username));
-                if(added){
-                  dispatch(a.changeComponent("Quiz"));
-                }
-                else{
-                  dispatch(a.changeComponent("Dashboard"));
-                }
-                
+                dispatch(a.changeComponent("Dashboard"));
               });
             }
           })
@@ -38,32 +32,27 @@ function SecurityForm(props) {
           password: e.target.password.value
         }).then(
           docref => {
-            dispatch(a.logIn(e.target.username.value));
-            if (added) {
-              dispatch(a.changeComponent("Quiz"));
-            }
-            else {
-              dispatch(a.changeComponent("Dashboard"));
-            }
+            dispatch(a.logIn(e.target.username.value))
+            dispatch(a.changeComponent("Dashboard"));
           }
         );
       default:
-}
+    }
   }
-return (
-  <form onSubmit={fireStoreSecurity}>
-    <p>{props.type}</p>
-    <div>
-      <label>Username</label>
-      <input name="username" type="text" />
-    </div>
-    <div>
-      <label>Password</label>
-      <input name="password" type="text" />
-    </div>
-    <button>{props.type}</button>
-  </form>
-)
+  return (
+    <form onSubmit={fireStoreSecurity}>
+      <p>{props.type}</p>
+      <div>
+        <label>Username</label>
+        <input name="username" type="text" />
+      </div>
+      <div>
+        <label>Password</label>
+        <input name="password" type="text" />
+      </div>
+      <button>{props.type}</button>
+    </form>
+  )
 }
 
 export default SecurityForm;
