@@ -1,5 +1,4 @@
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
-import { useFirestore } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import React from 'react';
 

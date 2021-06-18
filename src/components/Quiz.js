@@ -42,6 +42,7 @@ function Quiz() {
     )
   }
 
+ 
 
   if (isLoaded(quiz) && isLoaded(correctAnswers) && isLoaded(givenAnswers) && givenAnswers !== null) {
     const key = Object.keys(givenAnswers)[0];
@@ -49,7 +50,7 @@ function Quiz() {
 
     const key2 = Object.keys(correctAnswers)[0];
     const correct = correctAnswers[key2].answers;
-
+   
     return (
       <React.Fragment>
         <QuizResults quiz={quiz} correct={correct} given={given} />
@@ -107,7 +108,7 @@ function Quiz() {
         Loading...
         <Link to="/">
           <button type="button">
-            Exit Quiz
+            Back to dashboard.
           </button>
         </Link>
       </div>

@@ -23,6 +23,8 @@ function Security(props) {
   }
   return (
     <React.Fragment>
+      <p>Sign up to make quizzes or take quizzes.</p>
+      <p>You get your own dashboard to see your previous results and a complete list of quizzes to share with your friends.</p>
       <button onClick={() => setSecurityState("Login")}>Login</button>
       <button onClick={() => setSecurityState("Sign Up")}>Sign Up</button>
       {renderSecurityState(securityState)}

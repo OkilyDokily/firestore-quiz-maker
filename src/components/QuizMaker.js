@@ -1,10 +1,13 @@
-import React from 'react'
+import React from 'react';
+import * as a from '../Actions/index'
 import { useFirestore } from 'react-redux-firebase';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+
 
 function QuizMaker() {
   const firestore = useFirestore();
   const username = useSelector(state => state.security.loggedIn);
+  const dispatch = useDispatch();
   function submitQuiz(e) {
     e.preventDefault();
     const obj = {
@@ -86,7 +89,7 @@ function QuizMaker() {
 
   }
   return (
-    <React.Fragment>
+    <div>
       <form onSubmit={submitQuiz}>
         <div>
           <label>What is the title of you quiz:</label>
@@ -239,7 +242,9 @@ function QuizMaker() {
         </div>
         <button>Submit Quiz</button>
       </form>
-    </React.Fragment>)
+      <button onClick={() => dispatch(a.changeComponent("Dashboard"))}>Exit Quiz Maker</button>
+    </div>
+  )
 }
 
 export default QuizMaker;

@@ -24,9 +24,11 @@ function Controller() {
     if (loggedIn && user !== undefined && id !== undefined){
       dispatch(a.changeComponent("Quiz"))
     }
-    else if (loggedIn) {
-      dispatch(a.changeComponent("Dashboard"))
+    else if (!loggedIn) {
+      dispatch(a.changeComponent("Security"))
     }
+   
+    
   });
 
 

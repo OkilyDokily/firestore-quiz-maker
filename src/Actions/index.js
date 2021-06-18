@@ -6,6 +6,11 @@ export function logIn(log){
     log
   }
 }
+export function logOut() {
+  return {
+    type: a.LOG_OUT,
+  }
+}
 
 export function changeComponent(component){
   return {

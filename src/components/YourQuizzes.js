@@ -13,13 +13,23 @@ function YourQuizzes() {
 
 
   if (isLoaded(yourQuizzes) && yourQuizzes !== undefined) {
-    return (
-      <React.Fragment>
+    if (yourQuizzes === null){
+      return(
+        <div>
+          You haven't taken any quizzes yet.
+        </div>
+      )
+    }
+    else{
+      return (
+        <React.Fragment>
           {Object.keys(yourQuizzes).map(x => {
-            return (<p><Link to={`/${yourQuizzes[x].tester}/${yourQuizzes[x].correlation}`}>{`${yourQuizzes[x].title} Quiz by ${yourQuizzes[x].tester} Your score: ${yourQuizzes[x].result.toFixed(2)*100}%`}</Link></p>)
+            return (<p><Link to={`/${yourQuizzes[x].tester}/${yourQuizzes[x].correlation}`}>{`${yourQuizzes[x].title} Quiz by ${yourQuizzes[x].tester} Your score: ${yourQuizzes[x].result.toFixed(2) * 100}%`}</Link></p>)
           })}
-      </React.Fragment>
-    )
+        </React.Fragment>
+      )
+    }
+    
   }
   else {
     return(
