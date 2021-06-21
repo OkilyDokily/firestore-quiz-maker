@@ -17,6 +17,12 @@ function QuizResults(props) {
     (state) => state.firestore.data["result"]
   )
 
+  const quizResultsStyle ={
+    width: "300px",
+    border: "1px solid green",
+    marginBottom: "4px",
+    padding: "5px"
+  }
   function CalculateResults() {
 
     let results = Object.keys(props.given).map(x => props.given[x] === props.correct[x]);
@@ -30,9 +36,10 @@ function QuizResults(props) {
 
   }
   if (isLoaded(result) && result !== undefined) {
+    
+    
     return (
-
-      <React.Fragment>
+      <div style={quizResultsStyle}>
         <p>Percentage correct {CalculateResults()}%</p>
         {Object.keys(props.quiz.questions).map((_, index) => {
           const q = props.quiz.questions[index];
@@ -55,7 +62,7 @@ function QuizResults(props) {
             </div>
           )
         })}
-      </React.Fragment>
+      </div>
     )
   }
   else {

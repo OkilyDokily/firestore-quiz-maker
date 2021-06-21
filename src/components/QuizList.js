@@ -21,8 +21,11 @@ function QuizList(props) {
   }
   else {
     if (quizzes !== undefined && quizzes?.length === 0) {
+      const haventMadeQuizzesYetStyle ={
+        marginBottom: "4px"
+      }
       return(
-        <div>
+        <div style={haventMadeQuizzesYetStyle}>
           You haven't made any quizzes yet.
         </div>
       )
@@ -30,8 +33,12 @@ function QuizList(props) {
     }
     else {
       if (isLoaded(quizzes)) {
+        const quizzesP = {
+          marginBottom:"4px"
+        }
         return (
           <React.Fragment>
+            <p style={quizzesP}>Quizzes you've made.</p>
             {quizzes.map(quiz => {
               return <QuizItem title={quiz.title} key={quiz.id} id={quiz.id} changeStats={props.changeStats} />
             })}

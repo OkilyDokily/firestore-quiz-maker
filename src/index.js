@@ -21,6 +21,8 @@ const rrfProps = {
   createFirestoreInstance
 }
 
+
+
 ReactDOM.render(
   <Provider store={store}>
     <ReactReduxFirebaseProvider {...rrfProps}>

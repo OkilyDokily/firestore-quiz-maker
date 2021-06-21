@@ -34,12 +34,14 @@ function DashBoard() {
         return null;
     }
   }
-
+  const makeAQuizButtonStyle={
+    marginRight:"3px"
+  }
   return (
     <React.Fragment>
       <p>{loggedIn}'s Dashboard</p>
       {switchComponent()}
-      <button onClick={() => dispatch(a.changeComponent("QuizMaker"))}>Make a quiz</button>
+      <button style={makeAQuizButtonStyle} onClick={() => dispatch(a.changeComponent("QuizMaker"))}>Make a quiz</button>
       {component === "QuizList" ? <button onClick={() => changeComponent("YourQuizzes")}>See Quizzes that you've taken</button> :<button onClick={reload}>See quizzes that you have made</button> }
     </React.Fragment>
   )

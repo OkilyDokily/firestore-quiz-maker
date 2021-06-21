@@ -5,7 +5,9 @@ import React, { useState } from 'react';
 function Security(props) {
   const [securityState, setSecurityState] = useState(null);
   
-  
+  const explainerLinesStyle ={
+    fontSize:"14px"
+  }
 
   function renderSecurityState(securityState) {
     switch (securityState) {
@@ -23,10 +25,12 @@ function Security(props) {
   }
   return (
     <React.Fragment>
-      <p>Sign up to make quizzes or take quizzes.</p>
-      <p>You get your own dashboard to see your previous results and a complete list of quizzes to share with your friends.</p>
-      <button onClick={() => setSecurityState("Login")}>Login</button>
-      <button onClick={() => setSecurityState("Sign Up")}>Sign Up</button>
+      <div style={explainerLinesStyle}>
+        <p>Sign up to make quizzes or take quizzes.</p>
+        <p>You get your own dashboard which lets you see all of your previous quiz results and a complete list of quizzes you've made, which you can share with your friends.</p>
+      </div>
+      <button className="button3" onClick={() => setSecurityState("Login")}>Login</button>
+      <button className="button3" onClick={() => setSecurityState("Sign Up")}>Sign Up</button>
       {renderSecurityState(securityState)}
     </React.Fragment>
   )

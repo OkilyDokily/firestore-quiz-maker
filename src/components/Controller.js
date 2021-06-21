@@ -4,7 +4,7 @@ import Dashboard from './Dashboard';
 import Quiz from './Quiz';
 import QuizMaker from './QuizMaker';
 import Header from './Header';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import * as a from '../Actions/index';
 import {
   useParams
@@ -17,18 +17,18 @@ function Controller() {
   const dispatch = useDispatch();
   let loggedIn = useSelector(state => state.security.loggedIn);
   useEffect(() => {
-    if(user !== undefined && id !== undefined )
-    {
-      dispatch(a.addRoute(user,id));
+    if (user !== undefined && id !== undefined) {
+      dispatch(a.addRoute(user, id));
     }
-    if (loggedIn && user !== undefined && id !== undefined){
+    if (loggedIn && user !== undefined && id !== undefined) {
       dispatch(a.changeComponent("Quiz"))
+    }
+    if (loggedIn && user === undefined && id === undefined) {
+      dispatch(a.changeComponent("Dashboard"))
     }
     else if (!loggedIn) {
       dispatch(a.changeComponent("Security"))
     }
-   
-    
   });
 
 

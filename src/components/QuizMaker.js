@@ -93,26 +93,26 @@ function QuizMaker() {
       <form onSubmit={submitQuiz}>
         <div>
           <label>What is the title of you quiz:</label>
-          <input name="title" type="text" />
+          <input name="title" type="text" required/>
         </div>
         <div>
-          <label>What is the first question of your quiz?</label>
-          <input name="Q1" type="text" />
+          <label>Question 1.</label>
+          <input name="Q1" type="text" required/>
           <div>
             <label>A.</label>
-            <input name="A1" type="text" />
+            <input name="A1" type="text" required/>
           </div>
           <div>
             <label>B.</label>
-            <input name="B1" type="text" />
+            <input name="B1" type="text" required/>
           </div>
           <div>
             <label>C.</label>
-            <input name="C1" type="text" />
+            <input name="C1" type="text" required/>
           </div>
           <div>
             <label>D.</label>
-            <input name="D1" type="text" />
+            <input name="D1" type="text" required/>
           </div>
           <div>
             <label>Correct Answer</label>
@@ -126,22 +126,22 @@ function QuizMaker() {
         </div>
         <div>
           <label>Question 2.</label>
-          <input name="Q2" type="text" />
+          <input name="Q2" type="text" required/>
           <div>
             <label>A.</label>
-            <input name="A2" type="text" />
+            <input name="A2" type="text" required/>
           </div>
           <div>
             <label>B.</label>
-            <input name="B2" type="text" />
+            <input name="B2" type="text" required/>
           </div>
           <div>
             <label>C.</label>
-            <input name="C2" type="text" />
+            <input name="C2" type="text" required/>
           </div>
           <div>
             <label>D.</label>
-            <input name="D2" type="text" />
+            <input name="D2" type="text" required/>
           </div>
           <div>
             <label>Correct Answer</label>
@@ -154,23 +154,23 @@ function QuizMaker() {
           </div>
         </div>
         <div>
-          <label>Third Question</label>
-          <input name="Q3" type="text" />
+          <label>Question 3.</label>
+          <input name="Q3" type="text" required/>
           <div>
             <label>A.</label>
-            <input name="A3" type="text" />
+            <input name="A3" type="text" required/>
           </div>
           <div>
             <label>B.</label>
-            <input name="B3" type="text" />
+            <input name="B3" type="text" required/>
           </div>
           <div>
             <label>C.</label>
-            <input name="C3" type="text" />
+            <input name="C3" type="text" required/>
           </div>
           <div>
             <label>D.</label>
-            <input name="D3" type="text" />
+            <input name="D3" type="text" required/>
           </div>
           <div>
             <label>Correct Answer</label>
@@ -183,23 +183,23 @@ function QuizMaker() {
           </div>
         </div>
         <div>
-          <label>Fourth Question?</label>
-          <input name="Q4" type="text" />
+          <label>Question 4.</label>
+          <input name="Q4" type="text" required/>
           <div>
             <label>A.</label>
-            <input name="A4" type="text" />
+            <input name="A4" type="text" required/>
           </div>
           <div>
             <label>B.</label>
-            <input name="B4" type="text" />
+            <input name="B4" type="text" required/>
           </div>
           <div>
             <label>C.</label>
-            <input name="C4" type="text" />
+            <input name="C4" type="text" required/>
           </div>
           <div>
             <label>D.</label>
-            <input name="D4" type="text" />
+            <input name="D4" type="text" required/>
           </div>
           <div>
             <label>Correct Answer</label>
@@ -212,23 +212,23 @@ function QuizMaker() {
           </div>
         </div>
         <div>
-          <label>Fifth Question</label>
-          <input name="Q5" type="text" />
+          <label>Question 5.</label>
+          <input name="Q5" type="text" required/>
           <div>
             <label>A.</label>
-            <input name="A5" type="text" />
+            <input name="A5" type="text" required/>
           </div>
           <div>
             <label>B.</label>
-            <input name="B5" type="text" />
+            <input name="B5" type="text" required/>
           </div>
           <div>
             <label>C.</label>
-            <input name="C5" type="text" />
+            <input name="C5" type="text" required/>
           </div>
           <div>
             <label>D.</label>
-            <input name="D5" type="text" />
+            <input name="D5" type="text" required/>
           </div>
           <div>
             <label>Correct Answer</label>

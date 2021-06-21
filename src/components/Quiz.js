@@ -94,6 +94,7 @@ function Quiz() {
           })}
           <button>Get Results</button>
         </form>
+        
         <Link to="/">
           <button type="button">
             Exit Quiz
