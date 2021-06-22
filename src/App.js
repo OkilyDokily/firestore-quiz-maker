@@ -15,14 +15,14 @@ const appStyle = {
 
 function App() {
   return (
-    // <div style={appStyle}>
+    <div id="app" style={appStyle}>
     <Router>
       <Switch>
         <Route path="/:user/:id" component={Controller} />
         <Route path="/" component={Controller} />
       </Switch>
     </Router>
-    // </div>
+   </div>
   );
 }
 

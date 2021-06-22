@@ -89,10 +89,10 @@ function QuizMaker() {
 
   }
   return (
-    <div>
+    <div id="quizMaker">
       <form onSubmit={submitQuiz}>
         <div>
-          <label>What is the title of you quiz:</label>
+          <label>Quiz Title</label>
           <input name="title" type="text" required/>
         </div>
         <div>

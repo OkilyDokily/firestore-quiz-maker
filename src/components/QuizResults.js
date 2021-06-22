@@ -44,7 +44,7 @@ function QuizResults(props) {
         {Object.keys(props.quiz.questions).map((_, index) => {
           const q = props.quiz.questions[index];
           return (
-            <div>
+            <div className={props.given[index] === props.correct[index] ? "green" : "red"}>
               <p>Question {index + 1}:</p>
               <p>{q.question}</p>
               <ol type="A">

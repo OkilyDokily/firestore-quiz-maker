@@ -1,0 +1,68 @@
+body{
+  color:rgb(34, 65, 3);
+  background-color: #d2f8d2
+}
+
+
+button {
+  border: 0;
+  border-radius: 0.25rem;
+  background: #1baa33;
+  color: white;
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+  padding: 0.25rem 0.5rem;
+  margin: 0.25rem;
+  cursor: pointer;
+ 
+}
+/* https://css-tricks.com/overriding-default-button-styles/ */
+.quizItem:hover{
+    transform: scale(0.99);
+    cursor: pointer;
+}
+
+button:hover,
+button:focus {
+    background: #00ba19;
+}
+
+button:focus {
+    outline: 1px solid #fff;
+    outline-offset: -4px;
+}
+
+button:active {
+    transform: scale(0.99);
+}
+
+#quizMaker form > div > label{
+  display: block;
+}
+
+
+#quizMaker form > div > input{
+  margin-bottom: 10px;
+}
+
+
+#quizMaker form > div{
+  margin-bottom: 15px;
+}
+
+#quizMaker form > div > div{
+  margin-bottom: 10px;
+}
+
+.red {
+  color:red
+}
+
+.green{
+  color:green
+}
+
+

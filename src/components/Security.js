@@ -9,6 +9,18 @@ function Security(props) {
     fontSize:"14px"
   }
 
+  const signupStyle = {
+    margin: "4px"
+  }
+
+
+  const securityStyle = {
+    display: "flex",
+    flexDirection:'column',
+    justifyContent:"space-around",
+    minHeight: "200px"
+  }
+
   function renderSecurityState(securityState) {
     switch (securityState) {
       case "Login":
@@ -24,15 +36,18 @@ function Security(props) {
     }
   }
   return (
-    <React.Fragment>
+    <div id="security" style={securityStyle}>
       <div style={explainerLinesStyle}>
-        <p>Sign up to make quizzes or take quizzes.</p>
-        <p>You get your own dashboard which lets you see all of your previous quiz results and a complete list of quizzes you've made, which you can share with your friends.</p>
+        <p style={signupStyle}>Sign up to make quizzes or take quizzes.</p>
+        <p style={signupStyle}>You get your own dashboard which lets you see all of your previous quiz results and a complete list of quizzes you've made, which you can share with your friends.</p>
       </div>
-      <button className="button3" onClick={() => setSecurityState("Login")}>Login</button>
-      <button className="button3" onClick={() => setSecurityState("Sign Up")}>Sign Up</button>
+      <div>
+        <button className="button3" onClick={() => setSecurityState("Login")}>Login</button>
+        <button className="button3" onClick={() => setSecurityState("Sign Up")}>Sign Up</button>
+      </div>
+     
       {renderSecurityState(securityState)}
-    </React.Fragment>
+    </div>
   )
 }
 

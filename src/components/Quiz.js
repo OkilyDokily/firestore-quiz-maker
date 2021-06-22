@@ -1,14 +1,21 @@
 import { useFirestoreConnect, isLoaded} from 'react-redux-firebase';
 import { useFirestore } from 'react-redux-firebase';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import React from 'react';
 import QuizResults from './QuizResults';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import * as a from '../Actions/index'
 function Quiz() {
   const firestore = useFirestore();
+  
   const routeUser = useSelector(state => state.routing.username)
   const routeId = useSelector(state => state.routing.id)
   const loggedIn = useSelector(state => state.security.loggedIn);
+  
+  const dispatch = useDispatch();
+
+  const history = useHistory();
+
 
   useFirestoreConnect([
     { collection: 'quizzes' + routeUser, doc: routeId, storeAs: "quiz" },
@@ -42,7 +49,15 @@ function Quiz() {
     )
   }
 
- 
+  function dashBoardOrSecurity(){
+    if(loggedIn !== null){
+      dispatch(a.changeComponent("Dashboard"));
+    }
+    else{
+      dispatch(a.changeComponent("Security"));
+    }
+    history.push('/')
+  }
 
   if (isLoaded(quiz) && isLoaded(correctAnswers) && isLoaded(givenAnswers) && givenAnswers !== null) {
     const key = Object.keys(givenAnswers)[0];
@@ -54,11 +69,11 @@ function Quiz() {
     return (
       <React.Fragment>
         <QuizResults quiz={quiz} correct={correct} given={given} />
-        <Link to="/">
-          <button type="button">
+        
+          <button onClick={dashBoardOrSecurity} type="button">
             Exit Quiz
           </button>
-        </Link>
+ 
       </React.Fragment>
     )
   }
@@ -95,11 +110,11 @@ function Quiz() {
           <button>Get Results</button>
         </form>
         
-        <Link to="/">
-          <button type="button">
+      
+        <button onClick={dashBoardOrSecurity} type="button">
             Exit Quiz
           </button>
-        </Link>
+      
       </React.Fragment>
     )
   }
@@ -107,11 +122,11 @@ function Quiz() {
     return (
       <div>
         Loading...
-        <Link to="/">
-          <button type="button">
-            Back to dashboard.
+     
+        <button onClick={dashBoardOrSecurity} type="button">
+            Exit to Dashboard.
           </button>
-        </Link>
+      
       </div>
     )
   }

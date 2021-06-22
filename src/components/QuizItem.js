@@ -12,8 +12,8 @@ function QuizItem(props){
     marginBottom:"3px"
   }
   return(
-    <div style={quizItemStyle}>
-      <div onClick={clicked}>{props.title}</div>
+    <div className="quizItem" style={quizItemStyle}>
+      <div onClick={clicked} title="See stats and url for this quiz">{props.title}</div>
     </div>
   )
 }

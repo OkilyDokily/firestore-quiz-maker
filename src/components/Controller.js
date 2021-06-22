@@ -13,9 +13,10 @@ import {
 
 function Controller() {
   let { user, id } = useParams();
-
+  let component = useSelector(state => state.interface.component);
   const dispatch = useDispatch();
   let loggedIn = useSelector(state => state.security.loggedIn);
+  
   useEffect(() => {
     if (user !== undefined && id !== undefined) {
       dispatch(a.addRoute(user, id));
@@ -23,16 +24,13 @@ function Controller() {
     if (loggedIn && user !== undefined && id !== undefined) {
       dispatch(a.changeComponent("Quiz"))
     }
-    if (loggedIn && user === undefined && id === undefined) {
-      dispatch(a.changeComponent("Dashboard"))
-    }
     else if (!loggedIn) {
       dispatch(a.changeComponent("Security"))
     }
   });
 
 
-  let component = useSelector(state => state.interface.component);
+ 
   switch (component) {
 
     case "Security":
