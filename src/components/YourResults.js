@@ -4,7 +4,7 @@ import React from 'react';
 import { useHistory } from "react-router-dom";
 function YourResults() {
 
-  
+
   const loggedIn = useSelector(state => state.security.loggedIn);
   const history = useHistory();
   useFirestoreConnect([
@@ -52,4 +52,4 @@ function YourResults() {
   }
 
 }
-export default YourQuizzes;
+export default YourResults;

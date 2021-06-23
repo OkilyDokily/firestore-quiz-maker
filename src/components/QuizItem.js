@@ -1,9 +1,16 @@
 import React from 'react'
+import {
+useHistory
+} from "react-router-dom";
+
 
 function QuizItem(props){
+  const history = useHistory();
+  
   function clicked(){
-    props.changeStats({show:true,id:props.id})
+    history.pushed(`/${props.user}/${props.id}`)
   }
+
   const quizItemStyle ={
     border: "1px solid green",
     width: "200px",
@@ -11,9 +18,10 @@ function QuizItem(props){
     textAlign:"center",
     marginBottom:"3px"
   }
+
   return(
     <div className="quizItem" style={quizItemStyle}>
-      <div onClick={clicked} title="See stats and url for this quiz">{props.title}</div>
+      <div onClick={clicked} title="See quiz">{props.title}</div>
     </div>
   )
 }

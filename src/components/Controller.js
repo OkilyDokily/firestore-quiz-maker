@@ -9,7 +9,7 @@ import * as a from '../Actions/index';
 import {
   useParams
 } from "react-router-dom";
-import YourQuizzes from './YourResults';
+import QuizList from './QuizList';
 
 
 function Controller() {
@@ -20,17 +20,11 @@ function Controller() {
 
   useEffect(() => {
 
-    // if (user !== undefined && id !== undefined) {
-    //   // dispatch(a.addRoute(user, id));
-    // }
-    // else if(user !== undefined){
-
-    // }
     if (loggedIn && user !== undefined && id !== undefined) {
       dispatch(a.changeComponent("Quiz"))
     }
     else if(loggedIn && user !== undefined){
-      dispatch(a.changeComponent("YourQuizzes"))
+      dispatch(a.changeComponent("QuizList"))
     }
     else if (!loggedIn) {
       dispatch(a.changeComponent("Security"))
@@ -69,11 +63,11 @@ function Controller() {
           <QuizMaker />
         </React.Fragment>
       )
-    case "YourQuizzes":
+    case "QuizList":
       return (
         <React.Fragment>
           <Header />
-          <YourQuizzes />
+          <QuizList />
         </React.Fragment>
       )
     default:

@@ -3,13 +3,16 @@ import { useFirestore } from 'react-redux-firebase';
 import { useSelector,useDispatch } from 'react-redux';
 import React from 'react';
 import QuizResults from './QuizResults';
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import * as a from '../Actions/index'
+import {
+  useParams
+} from "react-router-dom";
 function Quiz() {
   const firestore = useFirestore();
-  
-  const routeUser = useSelector(state => state.routing.username)
-  const routeId = useSelector(state => state.routing.id)
+  let { user, id } = useParams();
+  // const routeUser = useSelector(state => state.routing.username)
+  // const routeId = useSelector(state => state.routing.id)
   const loggedIn = useSelector(state => state.security.loggedIn);
   
   const dispatch = useDispatch();
@@ -18,9 +21,9 @@ function Quiz() {
 
 
   useFirestoreConnect([
-    { collection: 'quizzes' + routeUser, doc: routeId, storeAs: "quiz" },
-    { collection: "answers" + routeUser, where: [['correlation', '==', routeId]], storeAs: "answers" },
-    { collection: "submitted" + loggedIn, where: [['correlation', '==', routeId]], storeAs: "givenanswers" }
+    { collection: 'quizzes' + user, doc: id, storeAs: "quiz" },
+    { collection: "answers" + user, where: [['correlation', '==',id ]], storeAs: "answers" },
+    { collection: "submitted" + loggedIn, where: [['correlation', '==', user]], storeAs: "givenanswers" }
   ]);
   
   const quiz = useSelector(
@@ -43,7 +46,7 @@ function Quiz() {
 
     firestore.collection("submitted" + loggedIn).add(
       {
-        correlation: routeId,
+        correlation: id,
         answers: givenAnswers
       }
     )
