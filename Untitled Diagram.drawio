@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-06-23T21:14:41.805Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36" etag="ERujZ_-5OM4SualmuU0l" version="14.8.0" type="github">
+<mxfile host="app.diagrams.net" modified="2021-06-23T21:44:34.839Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36" etag="ehIW01XYDuGQU9zvor4q" version="14.8.0" type="github">
   <diagram id="U5crEyMKDy2htWtxY-od" name="Page-1">
     <mxGraphModel dx="1102" dy="582" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -90,12 +90,6 @@
         </mxCell>
         <mxCell id="yOMpdm6TOZvl9S2Lb1wt-15" value="quizitem" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="298.27731343283585" y="459.46189189189187" width="73.43283582089552" height="34.5945945945946" as="geometry" />
-        </mxCell>
-        <mxCell id="PUbpo0mT-dT6CF3Mdy4J-7" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="298.29" y="206.89" width="73.43" height="45" as="geometry" />
-        </mxCell>
-        <mxCell id="PUbpo0mT-dT6CF3Mdy4J-8" value="Quiz Stats" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="322.76000000000005" y="220" width="27.54" height="20" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
