@@ -5,6 +5,21 @@ import QuizStats from './QuizStats';
 import React from 'react';
 
 function QuizList(props) {
+  const dispatch = useDispatch();
+  let [component, changeComponent] = useState("QuizList");
+
+  //raised state for use by Quizlist and QuizItems
+  const [isStats, showStats] = useState(false);
+
+  function changeStats(obj) {
+    showStats(obj);
+  }
+
+  function reload() {
+    changeComponent("Your");
+    showStats(false);
+  }
+
   const loggedIn = useSelector(state => state.security.loggedIn);
   useFirestoreConnect([
     { collection: 'quizzes' + loggedIn }
@@ -26,7 +41,7 @@ function QuizList(props) {
       }
       return(
         <div style={haventMadeQuizzesYetStyle}>
-          You haven't made any quizzes yet.
+          This user hasn't made any quizzes yet.
         </div>
       )
      

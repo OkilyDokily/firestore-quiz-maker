@@ -2,7 +2,9 @@ import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import React from 'react';
 import { useHistory } from "react-router-dom";
-function YourQuizzes() {
+function YourResults() {
+
+  
   const loggedIn = useSelector(state => state.security.loggedIn);
   const history = useHistory();
   useFirestoreConnect([
@@ -26,7 +28,7 @@ function YourQuizzes() {
     if (yourQuizzes === null){
       return(
         <div>
-          You haven't taken any quizzes yet.
+          There are no quizzes yet for this user.
         </div>
       )
     }

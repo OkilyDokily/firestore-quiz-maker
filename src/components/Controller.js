@@ -9,7 +9,7 @@ import * as a from '../Actions/index';
 import {
   useParams
 } from "react-router-dom";
-import YourQuizzes from './YourQuizzes';
+import YourQuizzes from './YourResults';
 
 
 function Controller() {
@@ -29,7 +29,9 @@ function Controller() {
     if (loggedIn && user !== undefined && id !== undefined) {
       dispatch(a.changeComponent("Quiz"))
     }
-
+    else if(loggedIn && user !== undefined){
+      dispatch(a.changeComponent("YourQuizzes"))
+    }
     else if (!loggedIn) {
       dispatch(a.changeComponent("Security"))
     }
