@@ -7,7 +7,7 @@ import * as a from '../Actions/index'
 
 
 function DashBoard() {
-  const loggedIn = useSelector(state => state.security.loggedIn);
+  // const loggedIn = useSelector(state => state.security.loggedIn);
   const dispatch = useDispatch();
   let [component, changeComponent] = useState("QuizList");
 

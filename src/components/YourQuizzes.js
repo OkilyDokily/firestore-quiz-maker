@@ -34,7 +34,7 @@ function YourQuizzes() {
       return (
         <React.Fragment>
           {Object.keys(yourQuizzes).map(x => {
-            return (<div style={yourItemStyle} onClick={(yourQuizzes[x].tester, yourQuizzes[x].correlation)=>yourQuizLink(a,b)}><Link to={`/${}/${}`}>{`${yourQuizzes[x].title} Quiz by ${yourQuizzes[x].tester} Your score: ${yourQuizzes[x].result.toFixed(2) * 100}%`}</Link></div>)
+            return (<div title="See which answers you got right." className="quizItem" style={yourItemStyle} onClick={() => yourQuizLink(yourQuizzes[x].tester, yourQuizzes[x].correlation)}>{`${yourQuizzes[x].title} by ${yourQuizzes[x].tester}, Your score: ${yourQuizzes[x].result.toFixed(2) * 100}%`}</div>)
           })}
         </React.Fragment>
       )

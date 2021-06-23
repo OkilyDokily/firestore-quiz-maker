@@ -1,19 +1,18 @@
-import * as a from "../Actions/ActionTypes";
+// import * as a from "../Actions/ActionTypes";
 
-const initialState = {
-  username:null,
-  id:null,
-  added:false
-}
+// const initialState = {
+//   username:null,
+//   id:null,
+// }
 
-function routingReducer(state= initialState,action){
-  switch(action.type){
-    case a.ADD_ROUTE:
-      return {username:action.username,id:action.id,added:true};
-    default:
-      return state;
-  }
-}
+// function routingReducer(state= initialState,action){
+//   switch(action.type){
+//     case a.ADD_ROUTE:
+//       return {username:action.username,id:action.id,added:true};
+//     default:
+//       return state;
+//   }
+// }
 
 
-export default routingReducer;
+// export default routingReducer;
