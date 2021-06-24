@@ -1,6 +1,6 @@
-import { useFirestoreConnect, isLoaded} from 'react-redux-firebase';
+import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { useFirestore } from 'react-redux-firebase';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import React from 'react';
 import QuizResults from './QuizResults';
 import { useHistory } from "react-router-dom";
@@ -10,22 +10,21 @@ import {
 } from "react-router-dom";
 function Quiz() {
   const firestore = useFirestore();
-  let { user, id } = useParams();
-  // const routeUser = useSelector(state => state.routing.username)
-  // const routeId = useSelector(state => state.routing.id)
-  const loggedIn = useSelector(state => state.security.loggedIn);
   
+  let { user, id } = useParams();
+
+  const loggedIn = useSelector(state => state.security.loggedIn);
+
   const dispatch = useDispatch();
 
   const history = useHistory();
 
-
   useFirestoreConnect([
     { collection: 'quizzes' + user, doc: id, storeAs: "quiz" },
-    { collection: "answers" + user, where: [['correlation', '==',id ]], storeAs: "answers" },
-    { collection: "submitted" + loggedIn, where: [['correlation', '==', user]], storeAs: "givenanswers" }
+    { collection: "answers" + user, where: [['correlation', '==', id]], storeAs: "answers" },
+    { collection: "submitted" + loggedIn, where: [['correlation', '==', id]], storeAs: "givenanswers" }
   ]);
-  
+
   const quiz = useSelector(
     (state) => state.firestore.data["quiz"]
   )
@@ -50,33 +49,36 @@ function Quiz() {
         answers: givenAnswers
       }
     )
+
+    
   }
 
-  function dashBoardOrSecurity(){
-    if(loggedIn !== null){
+  function dashBoardOrSecurity() {
+    if (loggedIn !== null) {
       dispatch(a.changeComponent("Dashboard"));
     }
-    else{
+    else {
       dispatch(a.changeComponent("Security"));
     }
     history.push('/')
   }
-
+ 
   if (isLoaded(quiz) && isLoaded(correctAnswers) && isLoaded(givenAnswers) && givenAnswers !== null) {
+  
     const key = Object.keys(givenAnswers)[0];
     const given = givenAnswers[key].answers;
 
     const key2 = Object.keys(correctAnswers)[0];
     const correct = correctAnswers[key2].answers;
-   
+
     return (
       <React.Fragment>
         <QuizResults quiz={quiz} correct={correct} given={given} />
-        
-          <button onClick={dashBoardOrSecurity} type="button">
-            Exit Quiz
-          </button>
- 
+
+        <button onClick={dashBoardOrSecurity} type="button">
+          Exit Quiz
+        </button>
+
       </React.Fragment>
     )
   }
@@ -112,12 +114,12 @@ function Quiz() {
           })}
           <button>Get Results</button>
         </form>
-        
-      
+
+
         <button onClick={dashBoardOrSecurity} type="button">
-            Exit Quiz
-          </button>
-      
+          Exit Quiz
+        </button>
+
       </React.Fragment>
     )
   }
@@ -125,11 +127,11 @@ function Quiz() {
     return (
       <div>
         Loading...
-     
+
         <button onClick={dashBoardOrSecurity} type="button">
-            Exit to Dashboard.
-          </button>
-      
+          Exit to Dashboard.
+        </button>
+
       </div>
     )
   }

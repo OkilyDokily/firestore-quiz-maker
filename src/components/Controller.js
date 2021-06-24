@@ -6,35 +6,22 @@ import QuizMaker from './QuizMaker';
 import Header from './Header';
 import { useSelector, useDispatch } from 'react-redux';
 import * as a from '../Actions/index';
-import {
-  useParams
-} from "react-router-dom";
 import QuizList from './QuizList';
 
 
 function Controller() {
-  let { user, id } = useParams();
+
   let component = useSelector(state => state.interface.component);
   const dispatch = useDispatch();
   let loggedIn = useSelector(state => state.security.loggedIn);
 
   useEffect(() => {
-
-    if (loggedIn && user !== undefined && id !== undefined) {
-      dispatch(a.changeComponent("Quiz"))
-    }
-    else if(loggedIn && user !== undefined){
-      dispatch(a.changeComponent("QuizList"))
-    }
-    else if (!loggedIn) {
+    if (!loggedIn) {
       dispatch(a.changeComponent("Security"))
     }
   });
 
-
-
   switch (component) {
-
     case "Security":
       return (
         <React.Fragment>

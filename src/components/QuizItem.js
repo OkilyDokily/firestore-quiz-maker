@@ -2,13 +2,15 @@ import React from 'react'
 import {
 useHistory
 } from "react-router-dom";
-
+import { useDispatch } from 'react-redux';
+import * as a from '../Actions/index';
 
 function QuizItem(props){
   const history = useHistory();
-  
+  const dispatch = useDispatch()
   function clicked(){
-    history.pushed(`/${props.user}/${props.id}`)
+    history.push(`/${props.user}/${props.id}`)
+    dispatch(a.changeComponent("Quiz"));
   }
 
   const quizItemStyle ={

@@ -1,16 +1,19 @@
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { useFirestore } from 'react-redux-firebase';
-import { useSelector } from 'react-redux';
+import { useSelector} from 'react-redux';
 import React from 'react';
+import {
+  useParams
+} from "react-router-dom";
 
 function QuizResults(props) {
+  let { user, id } = useParams();
   const firestore = useFirestore();
-  const routeId = useSelector(state => state.routing.id)
   const loggedIn = useSelector(state => state.security.loggedIn);
-  const routeUser = useSelector(state => state.routing.username)
+
   useFirestoreConnect([
     {
-      collection: 'results', where: [['correlation', '==', routeId], ['user', '==', loggedIn]], storeAs: "result"
+      collection: 'results', where: [['correlation', '==', id], ['user', '==', loggedIn]], storeAs: "result"
     }]);
 
   const result = useSelector(
@@ -29,13 +32,13 @@ function QuizResults(props) {
     const percentage = results.filter(x => x === true).length / results.length;
 
     if (result === null) {
-      firestore.collection("results").add({ result: percentage, user:loggedIn, correlation: routeId,tester: routeUser,title:props.quiz.title})
+      firestore.collection("results").add({ result: percentage, user:loggedIn, correlation: id,tester: user,title:props.quiz.title})
     }
 
     return (percentage * 100)
 
   }
-  if (isLoaded(result) && result !== undefined) {
+  if (isLoaded(result) && result !== undefined ) {
     
     
     return (
@@ -44,14 +47,14 @@ function QuizResults(props) {
         {Object.keys(props.quiz.questions).map((_, index) => {
           const q = props.quiz.questions[index];
           return (
-            <div className={props.given[index] === props.correct[index] ? "green" : "red"}>
+            <div key={index} className={props.given[index] === props.correct[index] ? "green" : "red"}>
               <p>Question {index + 1}:</p>
               <p>{q.question}</p>
               <ol type="A">
                 {Object.keys(q.answers).map((_, index) => {
                   const answer = q.answers[index];
                   return (
-                    <li>
+                    <li key={index}>
                       {answer}
                     </li>
                   )

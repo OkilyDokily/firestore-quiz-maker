@@ -6,6 +6,7 @@ function Header() {
   const component = useSelector(state => state.interface.component)
   const loggedIn = useSelector(state => state.security.loggedIn);
   const history = useHistory();
+  
   const headerStyle = {
     display: "flex",
     justifyContent: "space-between",
@@ -21,7 +22,8 @@ function Header() {
   }
 
   const catchLineStyle = {
-    fontSize: "20px"
+    fontSize: "20px",
+    marginLeft: "8px"
   }
 
   const button = {
@@ -32,11 +34,11 @@ function Header() {
   function returnMessage() {
     switch (component) {
       case "Dashboard":
-        return "Your Dashboard"
+        return "Your Dashboard";
       case "Security":
-        return "Quiz Maker - Make online quizzes fast."
+        return "Quiz Maker - Make online quizzes fast.";
       default:
-        return "Quiz Maker - Make online quizzes fast."
+        return "Quiz Maker - Make online quizzes fast.";
     }
   }
 

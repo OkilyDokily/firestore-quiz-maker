@@ -2,12 +2,30 @@ import { useFirestore } from 'react-redux-firebase';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import * as  a from '../Actions/index'
+import {
+  useParams
+} from "react-router-dom";
 
 function SecurityForm(props) {
+  let { user, id } = useParams();
   const firestore = useFirestore();
   const dispatch = useDispatch();
   const [message, changeMessage] = useState(null);
 
+  function changeComponent(){
+    if(user !== undefined && id !== undefined){
+      
+      dispatch(a.changeComponent("Quiz"))
+    }
+    else
+    if(user !== undefined ){
+      dispatch(a.changeComponent("QuizList"))
+    }
+    else{
+      dispatch(a.changeComponent("Dashboard"))
+    }
+  }
+  
   const fireStoreSecurity = (e) => {
     e.preventDefault();
     switch (props.type) {
@@ -19,7 +37,7 @@ function SecurityForm(props) {
             if (querySnapshot.size === 1) {
               querySnapshot.forEach((doc) => {
                 dispatch(a.logIn(doc.data().username));
-                dispatch(a.changeComponent("Dashboard"));
+                changeComponent();
               });
             }
             else if (querySnapshot.size === 0) {
@@ -47,7 +65,7 @@ function SecurityForm(props) {
               }).then(
                 docref => {
                   dispatch(a.logIn(e.target.username.value))
-                  dispatch(a.changeComponent("Dashboard"));
+                  changeComponent();
                 }
               )
             }

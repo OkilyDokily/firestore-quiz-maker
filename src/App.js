@@ -19,6 +19,7 @@ function App() {
     <Router>
       <Switch>
         <Route path="/:user/:id" component={Controller} />
+        <Route path="/:user/" component={Controller} />
         <Route path="/" component={Controller} />
       </Switch>
     </Router>

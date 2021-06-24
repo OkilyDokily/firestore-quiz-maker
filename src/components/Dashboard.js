@@ -18,7 +18,6 @@ function DashBoard() {
   const history = useHistory();
 
   function clicked() {
-    console.log(`/${loggedIn}`)
     history.push(`/${loggedIn}`)
     dispatch(a.changeComponent("QuizList"));
   }

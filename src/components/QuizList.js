@@ -1,17 +1,26 @@
-import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
-import { useSelector } from 'react-redux';
+import { useFirestoreConnect, isLoaded, actionTypes } from 'react-redux-firebase';
+import { useSelector,useDispatch } from 'react-redux';
 import QuizItem from './QuizItem';
 import React from 'react';
+import * as a from '../Actions/index'
 import {
-  useParams
+  useParams,useHistory
 } from "react-router-dom";
 
 function QuizList() {
-  let { user, _ } = useParams();
+  let { user} = useParams();
+  const dispatch = useDispatch();
+  const history = useHistory();
   // const loggedIn = useSelector(state => state.security.loggedIn);
+  
   useFirestoreConnect([
     { collection: 'quizzes' + user, storeAs: "quizzes"  }
   ]);
+
+  function returnToDashBoard(){  
+    history.push("/");
+    dispatch(a.changeComponent("Dashboard"));
+  }
 
   const quizzes = useSelector(state => state.firestore.ordered["quizzes"])
 
@@ -37,6 +46,7 @@ function QuizList() {
           {quizzes.map(quiz => {
             return <QuizItem title={quiz.title} key={quiz.id} id={quiz.id} user={user} />
           })}
+          <button onClick={returnToDashBoard}>Return to Dashboard</button>
         </React.Fragment>
       )
     }

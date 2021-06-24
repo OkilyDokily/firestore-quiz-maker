@@ -1,12 +1,15 @@
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import React from 'react';
 import { useHistory } from "react-router-dom";
+import * as a from '../Actions/index'
 function YourResults() {
 
 
   const loggedIn = useSelector(state => state.security.loggedIn);
   const history = useHistory();
+  const dispatch = useDispatch();
+
   useFirestoreConnect([
     { collection: "results", where: [['user', '==', loggedIn]], storeAs: "yourquizzes" }
   ]);
@@ -22,6 +25,7 @@ function YourResults() {
 
   function yourQuizLink(tester,correlation){
     history.push(`/${tester}/${correlation}`)
+    dispatch(a.changeComponent("Quiz"));
   }
 
   if (isLoaded(yourQuizzes) && yourQuizzes !== undefined) {
@@ -36,7 +40,7 @@ function YourResults() {
       return (
         <React.Fragment>
           {Object.keys(yourQuizzes).map(x => {
-            return (<div title="See which answers you got right." className="quizItem" style={yourItemStyle} onClick={() => yourQuizLink(yourQuizzes[x].tester, yourQuizzes[x].correlation)}>{`${yourQuizzes[x].title} by ${yourQuizzes[x].tester}, Your score: ${yourQuizzes[x].result.toFixed(2) * 100}%`}</div>)
+            return (<div key={yourQuizzes[x].correlation} title="See which answers you got right." className="quizItem" style={yourItemStyle} onClick={() => yourQuizLink(yourQuizzes[x].tester, yourQuizzes[x].correlation)}>{`${yourQuizzes[x].title} by ${yourQuizzes[x].tester}, Your score: ${yourQuizzes[x].result.toFixed(2) * 100}%`}</div>)
           })}
         </React.Fragment>
       )

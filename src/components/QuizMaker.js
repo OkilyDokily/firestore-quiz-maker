@@ -70,7 +70,7 @@ function QuizMaker() {
           },
         }
       }
-
+      
     }
     firestore.collection("quizzes" + username).add(obj).then(doc => {
       firestore.collection("answers" + username).add({
@@ -85,8 +85,8 @@ function QuizMaker() {
       });
     }
     );
-
-
+    
+    dispatch(a.changeComponent("Dashboard"));
   }
   return (
     <div id="quizMaker">
