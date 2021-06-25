@@ -26,21 +26,21 @@ function QuizResults(props) {
     marginBottom: "4px",
     padding: "5px"
   }
+
   function CalculateResults() {
 
     let results = Object.keys(props.given).map(x => props.given[x] === props.correct[x]);
     const percentage = results.filter(x => x === true).length / results.length;
-
+    console.log(result, "before null", props.quiz.title);
     if (result === null) {
+      console.log("result","null",result,props.quiz.title);
       firestore.collection("results").add({ result: percentage, user:loggedIn, correlation: id,tester: user,title:props.quiz.title})
     }
 
     return (percentage * 100)
-
   }
+
   if (isLoaded(result) && result !== undefined ) {
-    
-    
     return (
       <div style={quizResultsStyle}>
         <p>Percentage correct {CalculateResults()}%</p>

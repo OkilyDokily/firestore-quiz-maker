@@ -64,7 +64,10 @@ function Quiz() {
   }
  
   if (isLoaded(quiz) && isLoaded(correctAnswers) && isLoaded(givenAnswers) && givenAnswers !== null) {
-  
+    console.log(givenAnswers,"given answers")
+    console.log(quiz,"quiz")
+    console.log(correctAnswers,"correct answers")
+
     const key = Object.keys(givenAnswers)[0];
     const given = givenAnswers[key].answers;
 
