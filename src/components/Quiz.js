@@ -1,16 +1,17 @@
-import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { useFirestore } from 'react-redux-firebase';
 import { useSelector, useDispatch } from 'react-redux';
-import React from 'react';
+import React, { useState } from 'react';
 import QuizResults from './QuizResults';
 import { useHistory } from "react-router-dom";
 import * as a from '../Actions/index'
 import {
   useParams
 } from "react-router-dom";
+
+
 function Quiz() {
   const firestore = useFirestore();
-  
+
   let { user, id } = useParams();
 
   const loggedIn = useSelector(state => state.security.loggedIn);
@@ -19,38 +20,68 @@ function Quiz() {
 
   const history = useHistory();
 
-  useFirestoreConnect([
-    { collection: 'quizzes' + user, doc: id, storeAs: "quiz" },
-    { collection: "answers" + user, where: [['correlation', '==', id]], storeAs: "answers" },
-    { collection: "submitted" + loggedIn, where: [['correlation', '==', id]], storeAs: "givenanswers" }
-  ]);
 
-  const quiz = useSelector(
-    (state) => state.firestore.data["quiz"]
-  )
-  let correctAnswers = useSelector(
-    (state) => state.firestore.data["answers"]
-  )
-  let givenAnswers = useSelector(
-    (state) => state.firestore.data["givenanswers"]
-  )
+  const [quiz, quizState] = useState(false)
+  if (quiz === false) {
+    firestore.collection("quizzes" + user).doc(id).get().then(doc => {
+      quizState(doc.data());
+    })
+  }
+
+  const [correctAnswers, correctAnswersState] = useState(false)
+  if (correctAnswers === false) {
+    let first = true;
+    firestore.collection("answers" + user).where('correlation', '==', id).get().then(query => {
+      query.forEach(doc => {
+        if (first === true) {
+          correctAnswersState(doc.data());
+          first = false;
+        }
+      })
+    })
+  }
+
+  const [givenAnswers, givenAnswersState] = useState(false);
+
+
+  function getGivenAnswers() {
+    if (givenAnswers === false) {
+
+      firestore.collection("submitted" + loggedIn).where('correlation', '==', id).limit(1).get().then(query => {
+        if (query.empty) {
+          
+        }
+        else {
+          query.forEach(doc => {
+            givenAnswersState(doc.data());
+          }
+          )
+        }
+      })
+    }
+  }
+  
+  if(givenAnswers === false){
+    getGivenAnswers();
+  }
 
   function submitQuiz(e) {
     e.preventDefault();
     const selects = document.getElementsByTagName("SELECT");
-    givenAnswers = {};
+    let given = {};
     [...selects].forEach(s => {
-      givenAnswers[s.getAttribute("name")] = s.options[s.selectedIndex].value;
+      given[s.getAttribute("name")] = s.options[s.selectedIndex].value;
     })
 
     firestore.collection("submitted" + loggedIn).add(
       {
         correlation: id,
-        answers: givenAnswers
+        answers: given
       }
-    )
+    ).then(x =>{
+      getGivenAnswers();
+    })
 
-    
   }
 
   function dashBoardOrSecurity() {
@@ -62,17 +93,12 @@ function Quiz() {
     }
     history.push('/')
   }
- 
-  if (isLoaded(quiz) && isLoaded(correctAnswers) && isLoaded(givenAnswers) && givenAnswers !== null) {
-    console.log(givenAnswers,"given answers")
-    console.log(quiz,"quiz")
-    console.log(correctAnswers,"correct answers")
 
-    const key = Object.keys(givenAnswers)[0];
-    const given = givenAnswers[key].answers;
 
-    const key2 = Object.keys(correctAnswers)[0];
-    const correct = correctAnswers[key2].answers;
+  if ((quiz !== false) && (correctAnswers !== false) && (givenAnswers !== false) && getGivenAnswers() !== false) {
+
+    const given = givenAnswers.answers;
+    const correct = correctAnswers.answers;
 
     return (
       <React.Fragment>
@@ -81,11 +107,10 @@ function Quiz() {
         <button onClick={dashBoardOrSecurity} type="button">
           Exit Quiz
         </button>
-
       </React.Fragment>
     )
   }
-  else if (isLoaded(quiz) && isLoaded(correctAnswers) && isLoaded(givenAnswers)) {
+  else if ((quiz !== false) && (correctAnswers !== false)) {
     return (
       <React.Fragment>
         <form onSubmit={submitQuiz}>

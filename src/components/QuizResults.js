@@ -1,7 +1,6 @@
-import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { useFirestore } from 'react-redux-firebase';
-import { useSelector} from 'react-redux';
-import React from 'react';
+import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
 import {
   useParams
 } from "react-router-dom";
@@ -10,17 +9,10 @@ function QuizResults(props) {
   let { user, id } = useParams();
   const firestore = useFirestore();
   const loggedIn = useSelector(state => state.security.loggedIn);
+  
+  const [calculated,calculate] = useState(null);
 
-  useFirestoreConnect([
-    {
-      collection: 'results', where: [['correlation', '==', id], ['user', '==', loggedIn]], storeAs: "result"
-    }]);
-
-  const result = useSelector(
-    (state) => state.firestore.data["result"]
-  )
-
-  const quizResultsStyle ={
+  const quizResultsStyle = {
     width: "300px",
     border: "1px solid green",
     marginBottom: "4px",
@@ -31,19 +23,26 @@ function QuizResults(props) {
 
     let results = Object.keys(props.given).map(x => props.given[x] === props.correct[x]);
     const percentage = results.filter(x => x === true).length / results.length;
-    console.log(result, "before null", props.quiz.title);
-    if (result === null) {
-      console.log("result","null",result,props.quiz.title);
-      firestore.collection("results").add({ result: percentage, user:loggedIn, correlation: id,tester: user,title:props.quiz.title})
-    }
 
+    firestore.collection("results").where("correlation", "==", id).get().then(query => {
+      if (query.empty) {
+        firestore.collection("results").add({ result: percentage, user: loggedIn, correlation: id, tester: user, title: props.quiz.title }).then((doc2 => {
+        })
+        )
+      }
+    }
+    )
     return (percentage * 100)
   }
-
-  if (isLoaded(result) && result !== undefined ) {
+  if(calculated === null){
+    calculate(CalculateResults());
+  }
+  console.log(calculated);
+  if (calculated !== null) {
+    
     return (
       <div style={quizResultsStyle}>
-        <p>Percentage correct {CalculateResults()}%</p>
+        <p>Percentage correct {calculated}%</p>
         {Object.keys(props.quiz.questions).map((_, index) => {
           const q = props.quiz.questions[index];
           return (
@@ -71,7 +70,7 @@ function QuizResults(props) {
   else {
     return (
       <div>
-        not given
+        ... Loading
       </div>
     )
   }
@@ -79,5 +78,5 @@ function QuizResults(props) {
 
 
 
-
-export default QuizResults;
+const MemoizedQuizResults = React.memo(QuizResults)
+export default MemoizedQuizResults;
