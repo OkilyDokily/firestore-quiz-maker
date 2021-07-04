@@ -1,4 +1,4 @@
-import { useFirestoreConnect, isLoaded, actionTypes } from 'react-redux-firebase';
+import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { useSelector,useDispatch } from 'react-redux';
 import QuizItem from './QuizItem';
 import React from 'react';
@@ -8,13 +8,12 @@ import {
 } from "react-router-dom";
 
 function QuizList() {
-  let { user} = useParams();
+  let { user:maker } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
-  // const loggedIn = useSelector(state => state.security.loggedIn);
-  
+ 
   useFirestoreConnect([
-    { collection: 'quizzes' + user, storeAs: "quizzes"  }
+    { collection: 'quizzes' + maker, storeAs: "quizzes"  }
   ]);
 
   function returnToDashBoard(){  
@@ -25,6 +24,7 @@ function QuizList() {
   const quizzes = useSelector(state => state.firestore.ordered["quizzes"])
 
   if (quizzes !== undefined && quizzes?.length === 0) {
+    
     const haventMadeQuizzesYetStyle = {
       marginBottom: "4px"
     }
@@ -40,11 +40,12 @@ function QuizList() {
       const quizzesP = {
         marginBottom: "4px"
       }
+     
       return (
         <React.Fragment>
-          <p style={quizzesP}>Quizzes made by {user}.</p>
+          <p style={quizzesP}>Quizzes made by {maker}.</p>
           {quizzes.map(quiz => {
-            return <QuizItem title={quiz.title} key={quiz.id} id={quiz.id} user={user} />
+            return <QuizItem title={quiz.title} key={quiz.id} id={quiz.id} user={maker}/>
           })}
           <button onClick={returnToDashBoard}>Return to Dashboard</button>
         </React.Fragment>

@@ -37,9 +37,9 @@ function QuizResults(props) {
   if(calculated === null){
     calculate(CalculateResults());
   }
-  console.log(calculated);
+
   if (calculated !== null) {
-    
+ 
     return (
       <div style={quizResultsStyle}>
         <p>Percentage correct {calculated}%</p>

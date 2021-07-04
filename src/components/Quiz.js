@@ -49,7 +49,7 @@ function Quiz() {
 
       firestore.collection("submitted" + loggedIn).where('correlation', '==', id).limit(1).get().then(query => {
         if (query.empty) {
-          
+
         }
         else {
           query.forEach(doc => {
@@ -60,8 +60,8 @@ function Quiz() {
       })
     }
   }
-  
-  if(givenAnswers === false){
+
+  if (givenAnswers === false) {
     getGivenAnswers();
   }
 
@@ -78,7 +78,7 @@ function Quiz() {
         correlation: id,
         answers: given
       }
-    ).then(x =>{
+    ).then(x => {
       getGivenAnswers();
     })
 
@@ -94,6 +94,11 @@ function Quiz() {
     history.push('/')
   }
 
+  function seeMoreQuizzesByUser() {
+    dispatch(a.changeComponent("QuizList"));
+    history.push('/' + user)
+  }
+
 
   if ((quiz !== false) && (correctAnswers !== false) && (givenAnswers !== false) && getGivenAnswers() !== false) {
 
@@ -104,9 +109,11 @@ function Quiz() {
       <React.Fragment>
         <QuizResults quiz={quiz} correct={correct} given={given} />
 
+        <button onClick={seeMoreQuizzesByUser}>See More quizes by {user}</button>
         <button onClick={dashBoardOrSecurity} type="button">
           Exit Quiz
         </button>
+
       </React.Fragment>
     )
   }
@@ -143,6 +150,7 @@ function Quiz() {
           <button>Get Results</button>
         </form>
 
+        <button onClick={seeMoreQuizzesByUser}>See More quizes by {user}</button>
 
         <button onClick={dashBoardOrSecurity} type="button">
           Exit Quiz

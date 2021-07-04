@@ -91,7 +91,7 @@ function QuizMaker() {
   return (
     <div id="quizMaker">
       <form onSubmit={submitQuiz}>
-        <div>
+        {/* <div>
           <label>Quiz Title</label>
           <input name="title" type="text" required/>
         </div>
@@ -239,7 +239,8 @@ function QuizMaker() {
               <option value="D">D</option>
             </select>
           </div>
-        </div>
+        </div> */}
+        <button onClick={addAnotherQuestion}>Add another question</button>
         <button>Submit Quiz</button>
       </form>
       <button onClick={() => dispatch(a.changeComponent("Dashboard"))}>Exit Quiz Maker</button>
