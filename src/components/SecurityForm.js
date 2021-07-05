@@ -12,20 +12,20 @@ function SecurityForm(props) {
   const dispatch = useDispatch();
   const [message, changeMessage] = useState(null);
 
-  function changeComponent(){
-    if(user !== undefined && id !== undefined){
-      
+  function changeComponent() {
+    if (user !== undefined && id !== undefined) {
+
       dispatch(a.changeComponent("Quiz"))
     }
     else
-    if(user !== undefined ){
-      dispatch(a.changeComponent("QuizList"))
-    }
-    else{
-      dispatch(a.changeComponent("Dashboard"))
-    }
+      if (user !== undefined) {
+        dispatch(a.changeComponent("QuizList"))
+      }
+      else {
+        dispatch(a.changeComponent("Dashboard"))
+      }
   }
-  
+
   const fireStoreSecurity = (e) => {
     e.preventDefault();
     switch (props.type) {
@@ -43,7 +43,7 @@ function SecurityForm(props) {
             else if (querySnapshot.size === 0) {
               changeMessage("Either the username or password is incorrect")
             }
-            else if (querySnapshot.size === 2){
+            else if (querySnapshot.size === 2) {
               changeMessage("hmmmm")
             }
           })
@@ -51,8 +51,8 @@ function SecurityForm(props) {
             console.log("Error getting documents: ", error);
           });
       case "Sign Up":
-       return firestore.collection('users')
-         .where("username", "==", e.target.username.value).get().then((querySnapshot) => {
+        return firestore.collection('users')
+          .where("username", "==", e.target.username.value).get().then((querySnapshot) => {
             if (querySnapshot.size === 1) {
               querySnapshot.forEach((doc) => {
                 changeMessage("That username already exists.")
@@ -79,13 +79,13 @@ function SecurityForm(props) {
     width: "250px"
   }
   const inputStyles = {
-    display:"flex",
-    justifyContent:"space-between",
+    display: "flex",
+    justifyContent: "space-between",
     marginBottom: "5px"
   }
 
   const propsTypeStyle = {
-    fontWeight:"bold"
+    fontWeight: "bold"
   }
 
   return (

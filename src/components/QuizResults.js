@@ -1,6 +1,6 @@
 import { useFirestore } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   useParams
 } from "react-router-dom";
@@ -9,8 +9,8 @@ function QuizResults(props) {
   let { user, id } = useParams();
   const firestore = useFirestore();
   const loggedIn = useSelector(state => state.security.loggedIn);
-  
-  const [calculated,calculate] = useState(null);
+
+  const [calculated, calculate] = useState(null);
 
   const quizResultsStyle = {
     width: "300px",
@@ -24,8 +24,9 @@ function QuizResults(props) {
     let results = Object.keys(props.given).map(x => props.given[x] === props.correct[x]);
     const percentage = results.filter(x => x === true).length / results.length;
 
-    firestore.collection("results").where("correlation", "==", id).get().then(query => {
+    firestore.collection("results").where("correlation", "==", id).where("user", "==", loggedIn).get().then(query => {
       if (query.empty) {
+        console.log("empty")
         firestore.collection("results").add({ result: percentage, user: loggedIn, correlation: id, tester: user, title: props.quiz.title }).then((doc2 => {
         })
         )
@@ -34,12 +35,12 @@ function QuizResults(props) {
     )
     return (percentage * 100)
   }
-  if(calculated === null){
+  if (calculated === null) {
     calculate(CalculateResults());
   }
 
   if (calculated !== null) {
- 
+
     return (
       <div style={quizResultsStyle}>
         <p>Percentage correct {calculated}%</p>

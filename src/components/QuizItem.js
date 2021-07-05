@@ -16,12 +16,13 @@ function QuizItem(props) {
     history.push(`/${props.user}/${props.id}`)
     dispatch(a.changeComponent("Quiz"));
   }
-  const loggedIn = useSelector(state => state.security.loggedIn)
+
   useFirestoreConnect([
-    { collection: 'results', where: [["correlation", "==", props.id], ["user", "==", loggedIn]], storeAs: "result" }
+    { collection: "results", where: ["correlation", "==", props.id], storeAs: "getresults" + props.id }
   ]);
 
-  const result = useSelector(state => state.firestore.data["result"]);
+
+  const results = useSelector(state => state.firestore.data["getresults" + props.id]);
 
   const quizItemStyle = {
     border: "1px solid green",
@@ -30,22 +31,20 @@ function QuizItem(props) {
     textAlign: "center",
     marginBottom: "3px"
   }
-  if (isLoaded(result)) {
-    let property;
-    let percent;
 
-    if (result) {
-      property = Object.keys(result)[0];
-      percent = result[property].result;
+  if (isLoaded(results)) {
 
-      console.log(result, "result", property, "property", "percent")
+    let percent ;
+
+    if (results) {
+  
     } else {
-      console.log(result, "oof")
+    
     }
 
     return (
       <div className="quizItem" style={quizItemStyle}>
-        <div onClick={clicked} title="See quiz">{props.title} <span>{percent ? percent : null}</span></div>
+        <div onClick={clicked} title="See quiz">{props.title} - average: <span>{percent ? percent : null}</span></div>
       </div>
     )
   }
