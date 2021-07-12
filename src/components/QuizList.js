@@ -13,7 +13,7 @@ function QuizList() {
   const history = useHistory();
 
   useFirestoreConnect([
-    { collection: 'quizzes', where: ["tester","==",maker], storeAs: "quizzes" + maker }
+    { collection: 'users', doc: maker, subcollections: [{ collection: "made" }], storeAs: "quizzes" + maker }
   ]);
 
   function returnToDashBoard() {
@@ -30,7 +30,8 @@ function QuizList() {
     }
     return (
       <div style={haventMadeQuizzesYetStyle}>
-        This user hasn't made any quizzes yet.
+        <p>This user hasn't made any quizzes yet.</p>
+        <button onClick={returnToDashBoard}>Return to Dashboard</button>
       </div>
     )
 

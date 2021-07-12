@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Security from './Security';
 import Dashboard from './Dashboard';
-import Quiz from './Quiz';
+import QuizOrResults from './QuizOrResults';
 import QuizMaker from './QuizMaker';
 import Header from './Header';
 import { useSelector, useDispatch } from 'react-redux';
@@ -36,11 +36,11 @@ function Controller() {
           <Dashboard />
         </React.Fragment>
       );
-    case "Quiz":
+    case "QuizOrResults":
       return (
         <React.Fragment>
           <Header />
-          <Quiz />
+          <QuizOrResults />
         </React.Fragment>
       )
     case "QuizMaker":

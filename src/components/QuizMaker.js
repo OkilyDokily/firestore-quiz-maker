@@ -44,12 +44,10 @@ function QuizMaker() {
       answers[i] = e.target["CA" + (i + 1)].value
     });
 
-    firestore.collection("quizzes").add(obj).then(doc => {
-      firestore.collection("quizzes").doc(doc.id).collection("answers").add({
-        answers: answers
-      })
-    }
-    );
+    obj.answers = answers;
+
+
+    firestore.collection("users").doc(username).collection("made").add(obj);
 
 
     dispatch(a.changeComponent("Dashboard"));

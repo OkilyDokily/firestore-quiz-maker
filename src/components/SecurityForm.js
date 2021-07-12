@@ -14,8 +14,7 @@ function SecurityForm(props) {
 
   function changeComponent() {
     if (user !== undefined && id !== undefined) {
-
-      dispatch(a.changeComponent("Quiz"))
+      dispatch(a.changeComponent("QuizOrResults"))
     }
     else
       if (user !== undefined) {
@@ -30,13 +29,12 @@ function SecurityForm(props) {
     e.preventDefault();
     switch (props.type) {
       case "Login":
-        return firestore.collection('users')
-          .where("username", "==", e.target.username.value)
+        return firestore.collection('users').where("user","==",e.target.username.value)
           .where("password", "==", e.target.password.value).get()
           .then((querySnapshot) => {
             if (querySnapshot.size === 1) {
               querySnapshot.forEach((doc) => {
-                dispatch(a.logIn(doc.data().username));
+                dispatch(a.logIn(doc.data().user));
                 changeComponent();
               });
             }
@@ -52,17 +50,12 @@ function SecurityForm(props) {
           });
       case "Sign Up":
         return firestore.collection('users')
-          .where("username", "==", e.target.username.value).get().then((querySnapshot) => {
-            if (querySnapshot.size === 1) {
-              querySnapshot.forEach((doc) => {
-                changeMessage("That username already exists.")
-              });
+          .doc(e.target.username.value).get().then((doc) => {
+            if (doc.exists) {
+              changeMessage("That username already exists.")
             }
-            else if (querySnapshot.size === 0) {
-              firestore.collection('users').add({
-                username: e.target.username.value,
-                password: e.target.password.value
-              }).then(
+            else {
+              firestore.collection('users').doc(e.target.username.value).set({ user:e.target.username.value, password: e.target.password.value }).then(
                 docref => {
                   dispatch(a.logIn(e.target.username.value))
                   changeComponent();
