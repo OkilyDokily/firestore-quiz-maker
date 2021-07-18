@@ -32,7 +32,7 @@ function SecurityForm(props) {
     e.preventDefault();
     switch (props.type) {
       case "Login":
-        auth.signInWithEmailAndPassword(e.target.email.value, e.target.password.value).then((userCredential) => {
+        auth.signInWithEmailAndPassword(e.target.email.value, e.target.password.value).then(() => {
           const userId = firebase.auth().currentUser.uid;
           firestore.collection("users").where("userid", "==", userId ).get().then((snapshot) => {
             const user = snapshot.docs?.[0];
@@ -53,15 +53,19 @@ function SecurityForm(props) {
         break;
       case "Sign Up":
         firestore.collection("users").doc(e.target.user.value).get().then(snapshot => {
-          if (snapshot.exists()) {
+          if (snapshot.exists) {
             changeMessage("User already exists");
           }
           else {
-            auth.createUserWithEmailAndPassword(e.target.email.value, e.target.password.value).then((userCredential) => {
-              firestore.collection("users").doc(e.target.user.value).set({ userid: userCredential.userid }, { merge: true });
+            auth.createUserWithEmailAndPassword(e.target.email.value, e.target.password.value).then(() => {
+              firestore.collection("users").doc(e.target.user.value).set({ userid: firebase.auth().currentUser.uid }, { merge: true });
               dispatch(a.logIn(e.target.user.value));
               changeComponent();
-            });
+            }).catch((error) => {
+              console.log(error.message,"error");
+            }
+             
+            );
           }
         }
         );

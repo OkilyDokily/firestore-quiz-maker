@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import * as a from '../Actions/index'
+import firebase from 'firebase/app';
 function Header() {
   const dispatch = useDispatch();
   const component = useSelector(state => state.interface.component)
@@ -54,7 +55,14 @@ function Header() {
   }
 
   function logOut(){
-    dispatch(a.logOut())
+    //logout of firestore authentication
+
+    firebase.auth().signOut().then(() => {
+      dispatch(a.logOut())
+    }).catch((error) => {
+      // An error happened.
+    });
+  
     history.push('/')
   }
 
