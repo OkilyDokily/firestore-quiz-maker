@@ -34,41 +34,46 @@ function SecurityForm(props) {
       case "Login":
         auth.signInWithEmailAndPassword(e.target.email.value, e.target.password.value).then(() => {
           const userId = firebase.auth().currentUser.uid;
-          firestore.collection("users").where("userid", "==", userId ).get().then((snapshot) => {
-            const user = snapshot.docs?.[0];
-            console.log("snapshot",snapshot);
-            if (user) {
-              dispatch(a.logIn(user.id));
-              changeComponent();
+
+          firestore.collection("users").where("userid", "==", userId).get().then((querySnapshot) => {
+            if (querySnapshot.empty) {
+              changeMessage("User not found");
             }
             else {
-              changeMessage("Invalid Credentials");
+              const find = querySnapshot.docs.find(x => x.id === e.target.user.value);
+              if (find) {
+                dispatch(a.logIn(find.id))
+                changeComponent()
+              }
+              else {
+                changeMessage("User not found");
+              }
             }
-          }
-          )
-        }).catch((error) => {
-          console.log(error);
-          changeMessage("Invalid Credentials");
+          })
         });
         break;
       case "Sign Up":
-        firestore.collection("users").doc(e.target.user.value).get().then(snapshot => {
-          if (snapshot.exists) {
-            changeMessage("User already exists");
+        auth.createUserWithEmailAndPassword(e.target.email.value, e.target.password.value).then(() => {
+          firestore.collection("users").doc(e.target.user.value).set({ userid: firebase.auth().currentUser.uid }, { merge: true });
+          dispatch(a.logIn(e.target.user.value));
+          changeComponent();
+        }).catch((error) => {
+          console.log(error.code);
+          if (error.code === "auth/email-already-in-use") {
+            auth.signInWithEmailAndPassword(e.target.email.value, e.target.password.value).then(() => {
+              const userId = firebase.auth().currentUser.uid;
+              firestore.collection("users").doc(e.target.user.value).get().then((snapshot) => {
+                console.log(snapshot);
+                if (!snapshot.exists) {
+                  firestore.collection("users").doc(e.target.user.value).set({user:e.target.user.value, userid: userId }, { merge: true });
+                  dispatch(a.logIn(e.target.user.value));
+                  changeComponent();
+                }
+
+              })
+            })
           }
-          else {
-            auth.createUserWithEmailAndPassword(e.target.email.value, e.target.password.value).then(() => {
-              firestore.collection("users").doc(e.target.user.value).set({ userid: firebase.auth().currentUser.uid }, { merge: true });
-              dispatch(a.logIn(e.target.user.value));
-              changeComponent();
-            }).catch((error) => {
-              console.log(error.message,"error");
-            }
-             
-            );
-          }
-        }
-        );
+        })
 
         break;
       default:
@@ -99,6 +104,10 @@ function SecurityForm(props) {
           {message !== null ? <p>{message}</p> : null}
           <form style={formStyle} onSubmit={fireStoreSecurity}>
             <p style={propsTypeStyle}>{props.type}</p>
+            <div style={inputStyles}>
+              <label>Username</label>
+              <input name="user" type="text" />
+            </div>
             <div style={inputStyles}>
               <label>Email</label>
               <input name="email" type="email" />
