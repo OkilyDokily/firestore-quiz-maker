@@ -2,6 +2,7 @@ import { useFirestore } from 'react-redux-firebase';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import * as  a from '../Actions/index'
+import firebase from "firebase/app";
 import {
   useParams
 } from "react-router-dom";
@@ -9,6 +10,8 @@ import {
 function SecurityForm(props) {
   let { user, id } = useParams();
   const firestore = useFirestore();
+  const auth = firebase.auth();
+
   const dispatch = useDispatch();
   const [message, changeMessage] = useState(null);
 
@@ -29,44 +32,47 @@ function SecurityForm(props) {
     e.preventDefault();
     switch (props.type) {
       case "Login":
-        return firestore.collection('users').where("user","==",e.target.username.value)
-          .where("password", "==", e.target.password.value).get()
-          .then((querySnapshot) => {
-            if (querySnapshot.size === 1) {
-              querySnapshot.forEach((doc) => {
-                dispatch(a.logIn(doc.data().user));
-                changeComponent();
-              });
-            }
-            else if (querySnapshot.size === 0) {
-              changeMessage("Either the username or password is incorrect")
-            }
-            else if (querySnapshot.size === 2) {
-              changeMessage("hmmmm")
-            }
-          })
-          .catch((error) => {
-            console.log("Error getting documents: ", error);
-          });
-      case "Sign Up":
-        return firestore.collection('users')
-          .doc(e.target.username.value).get().then((doc) => {
-            if (doc.exists) {
-              changeMessage("That username already exists.")
+        auth.signInWithEmailAndPassword(e.target.email.value, e.target.password.value).then((userCredential) => {
+          const userId = firebase.auth().currentUser.uid;
+          firestore.collection("users").where("userid", "==", userId ).get().then((snapshot) => {
+            const user = snapshot.docs?.[0];
+            console.log("snapshot",snapshot);
+            if (user) {
+              dispatch(a.logIn(user.id));
+              changeComponent();
             }
             else {
-              firestore.collection('users').doc(e.target.username.value).set({ user:e.target.username.value, password: e.target.password.value }).then(
-                docref => {
-                  dispatch(a.logIn(e.target.username.value))
-                  changeComponent();
-                }
-              )
+              changeMessage("Invalid Credentials");
             }
-          })
+          }
+          )
+        }).catch((error) => {
+          console.log(error);
+          changeMessage("Invalid Credentials");
+        });
+        break;
+      case "Sign Up":
+        firestore.collection("users").doc(e.target.user.value).get().then(snapshot => {
+          if (snapshot.exists()) {
+            changeMessage("User already exists");
+          }
+          else {
+            auth.createUserWithEmailAndPassword(e.target.email.value, e.target.password.value).then((userCredential) => {
+              firestore.collection("users").doc(e.target.user.value).set({ userid: userCredential.userid }, { merge: true });
+              dispatch(a.logIn(e.target.user.value));
+              changeComponent();
+            });
+          }
+        }
+        );
+
+        break;
       default:
         return;
     }
   }
+
+
 
   const formStyle = {
     width: "250px"
@@ -81,24 +87,53 @@ function SecurityForm(props) {
     fontWeight: "bold"
   }
 
-  return (
-    <div>
-      {message !== null ? <p>{message}</p> : null}
-      <form style={formStyle} onSubmit={fireStoreSecurity}>
-        <p style={propsTypeStyle}>{props.type}</p>
-        <div style={inputStyles}>
-          <label>Username</label>
-          <input name="username" type="text" />
-        </div>
-        <div style={inputStyles}>
-          <label>Password</label>
-          <input name="password" type="text" />
-        </div>
-        <button>{props.type}</button>
-      </form>
-    </div>
 
-  )
+  switch (props.type) {
+    case "Login":
+      return (
+        <div>
+          {message !== null ? <p>{message}</p> : null}
+          <form style={formStyle} onSubmit={fireStoreSecurity}>
+            <p style={propsTypeStyle}>{props.type}</p>
+            <div style={inputStyles}>
+              <label>Email</label>
+              <input name="email" type="email" />
+            </div>
+            <div style={inputStyles}>
+              <label>Password</label>
+              <input name="password" type="password" />
+            </div>
+            <button>{props.type}</button>
+          </form>
+        </div>
+      )
+    case "Sign Up":
+      return (
+        <div>
+          {message !== null ? <p>{message}</p> : null}
+          <form style={formStyle} onSubmit={fireStoreSecurity}>
+            <p style={propsTypeStyle}>{props.type}</p>
+            <div style={inputStyles}>
+              <label>Username</label>
+              <input name="user" type="text" />
+            </div>
+            <div style={inputStyles}>
+              <label>Email</label>
+              <input name="email" type="email" />
+            </div>
+            <div style={inputStyles}>
+              <label>Password</label>
+              <input name="password" type="password" />
+            </div>
+            <button>{props.type}</button>
+          </form>
+        </div>
+      )
+    default:
+  }
+
+
+
 }
 
 export default SecurityForm;
