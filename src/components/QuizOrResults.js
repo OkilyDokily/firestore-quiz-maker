@@ -73,7 +73,7 @@ function QuizOrResults(props) {
 
       return (
         <React.Fragment>
-          <Quiz quiz={q} user={loggedIn} reload={reloadAfterFinishTest} />
+          <Quiz quiz={q} maker={maker} user={loggedIn} reload={reloadAfterFinishTest} />
           <button onClick={seeMoreQuizzesByUser}>See More quizes by {maker}</button>
           <button onClick={dashBoardOrSecurity} type="button">
             Exit Quiz

@@ -65,7 +65,7 @@ function SecurityForm(props) {
               firestore.collection("users").doc(e.target.user.value).get().then((snapshot) => {
                 console.log(snapshot);
                 if (!snapshot.exists) {
-                  firestore.collection("users").doc(e.target.user.value).set({user:e.target.user.value, userid: userId }, { merge: true });
+                  firestore.collection("users").doc(e.target.user.value).set({ user: e.target.user.value, userid: userId }, { merge: true });
                   dispatch(a.logIn(e.target.user.value));
                   changeComponent();
                 }

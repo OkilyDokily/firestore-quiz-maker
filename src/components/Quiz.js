@@ -25,7 +25,7 @@ function Quiz(props) {
       result: calculate
     }
    
-    firestore.collection("users").doc(props.user).collection("made").doc(props.quiz.id).collection("submitted").doc(props.user).set(given);
+    firestore.collection("users").doc(props.quiz.tester).collection("made").doc(props.quiz.id).collection("submitted").doc(props.user).set(given);
 
   }
 
