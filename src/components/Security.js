@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 
 function Security(props) {
   const [securityState, setSecurityState] = useState(null);
-  
-  const explainerLinesStyle ={
-    fontSize:"14px"
+
+  const explainerLinesStyle = {
+    fontSize: "14px"
   }
 
   const signupStyle = {
@@ -16,8 +16,8 @@ function Security(props) {
 
   const securityStyle = {
     display: "flex",
-    flexDirection:'column',
-    justifyContent:"space-around",
+    flexDirection: 'column',
+    justifyContent: "space-around",
     minHeight: "200px"
   }
 
@@ -30,6 +30,10 @@ function Security(props) {
       case "Sign Up":
         return (
           <SecurityForm type="Sign Up" />
+        )
+      case "Reset Password":
+          return (
+          <SecurityForm type="Reset Password" />
         )
       default:
         return null;
@@ -44,8 +48,9 @@ function Security(props) {
       <div>
         <button className="button3" onClick={() => setSecurityState("Login")}>Login</button>
         <button className="button3" onClick={() => setSecurityState("Sign Up")}>Sign Up</button>
+        <button className="button3" onClick={() => setSecurityState("Reset Password")}>Reset Password</button>
       </div>
-     
+
       {renderSecurityState(securityState)}
     </div>
   )

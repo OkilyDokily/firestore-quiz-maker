@@ -5,6 +5,7 @@ import QuizOrResults from './QuizOrResults';
 import QuizMaker from './QuizMaker';
 import Header from './Header';
 import { useSelector, useDispatch } from 'react-redux';
+import DeleteQuizzes from './DeleteQuizzes';
 import * as a from '../Actions/index';
 import QuizList from './QuizList';
 
@@ -57,9 +58,15 @@ function Controller() {
           <QuizList />
         </React.Fragment>
       )
+    case "DeleteQuizzes":
+      return (
+        <React.Fragment>
+          <Header />
+          <DeleteQuizzes/>
+        </React.Fragment>
+      )
     default:
   }
 }
-
 
 export default Controller;

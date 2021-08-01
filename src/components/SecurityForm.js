@@ -76,7 +76,18 @@ function SecurityForm(props) {
         })
 
         break;
+      case "Reset Password":
       default:
+        firebase.auth().sendPasswordResetEmail(e.target.email.value)
+          .then(() => {
+            // Password reset email sent!
+            // ..
+          })
+          .catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log("Error code", errorCode, "Error Message", errorMessage);
+          });
         return;
     }
   }
@@ -138,6 +149,20 @@ function SecurityForm(props) {
               <label>Password</label>
               <input name="password" type="password" />
             </div>
+            <button>{props.type}</button>
+          </form>
+        </div>
+      )
+    case "Reset Password":
+      return (
+        <div>
+          {message !== null ? <p>{message}</p> : null}
+          <form style={formStyle} onSubmit={fireStoreSecurity}>
+            <div style={inputStyles}>
+              <label>Email</label>
+              <input name="email" type="email" />
+            </div>
+
             <button>{props.type}</button>
           </form>
         </div>

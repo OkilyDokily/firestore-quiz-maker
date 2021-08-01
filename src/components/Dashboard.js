@@ -27,6 +27,7 @@ function DashBoard() {
       <YourResults />
       <button style={makeAQuizButtonStyle} onClick={() => dispatch(a.changeComponent("QuizMaker"))}>Make a quiz</button>
       <button onClick={clicked}>See Quizzes that you've made</button>
+    
     </React.Fragment>
   )
 }
