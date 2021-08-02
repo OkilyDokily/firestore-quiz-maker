@@ -35,6 +35,10 @@ function Security(props) {
           return (
           <SecurityForm type="Reset Password" />
         )
+      case "Change Email":
+        return (
+          <SecurityForm type="Change Email" />
+        )
       default:
         return null;
     }
@@ -49,6 +53,7 @@ function Security(props) {
         <button className="button3" onClick={() => setSecurityState("Login")}>Login</button>
         <button className="button3" onClick={() => setSecurityState("Sign Up")}>Sign Up</button>
         <button className="button3" onClick={() => setSecurityState("Reset Password")}>Reset Password</button>
+        <button className="button3" onClick={() => setSecurityState("Change Email")}>Change Email</button>
       </div>
 
       {renderSecurityState(securityState)}

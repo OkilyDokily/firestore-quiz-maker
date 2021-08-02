@@ -79,7 +79,7 @@ function SecurityForm(props) {
         })
         break;
       case "Reset Password":
-      default:
+
         firebase.auth().sendPasswordResetEmail(e.target.email.value)
           .then(() => {
             console.log("reset success");
@@ -90,6 +90,23 @@ function SecurityForm(props) {
             console.log("Error code", errorCode, "Error Message", errorMessage);
           });
         return;
+      case "Change Email":
+        auth.signInWithEmailAndPassword(e.target.email.value, e.target.password.value).then(() => {
+          const user = firebase.auth().currentUser;
+          //change email using firestore api
+          user.updateEmail(e.target.newemail.value).then(() => {
+            firestore.collection("users").where("email", "==", e.target.email.value).get().then((querySnapshot) => {
+              querySnapshot.docs.forEach(function (doc) {
+                console.log(doc,"doc");
+                firestore.collection("users").doc(doc.id).update({ email: e.target.newemail.value });
+              });
+            })
+
+          })
+
+        })
+        break;
+      default:
     }
   }
 
@@ -158,6 +175,28 @@ function SecurityForm(props) {
               <input name="email" type="email" />
             </div>
 
+            <button>{props.type}</button>
+          </form>
+        </div>
+      )
+
+    case "Change Email":
+      return (
+        <div>
+          {message !== null ? <p>{message}</p> : null}
+          <form style={formStyle} onSubmit={fireStoreSecurity}>
+            <div style={inputStyles}>
+              <label>Old Email</label>
+              <input name="email" type="email" />
+            </div>
+            <div style={inputStyles}>
+              <label>New Email</label>
+              <input name="newemail" type="email" />
+            </div>
+            <div style={inputStyles}>
+              <label>Password</label>
+              <input name="password" type="password" />
+            </div>
             <button>{props.type}</button>
           </form>
         </div>
