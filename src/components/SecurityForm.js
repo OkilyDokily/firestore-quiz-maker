@@ -32,29 +32,34 @@ function SecurityForm(props) {
     e.preventDefault();
     switch (props.type) {
       case "Login":
-        auth.signInWithEmailAndPassword(e.target.email.value, e.target.password.value).then(() => {
-          const userId = firebase.auth().currentUser.uid;
+        firestore.collection("users").where("user", "==", e.target.user.value).get().then(function (snapshot) {
+          console.log(snapshot)
+          let email = snapshot.docs[0].data().email;
+          console.log(email)
+          auth.signInWithEmailAndPassword(email, e.target.password.value).then(() => {
+            const userId = firebase.auth().currentUser.uid;
 
-          firestore.collection("users").where("userid", "==", userId).get().then((querySnapshot) => {
-            if (querySnapshot.empty) {
-              changeMessage("User not found");
-            }
-            else {
-              const find = querySnapshot.docs.find(x => x.id === e.target.user.value);
-              if (find) {
-                dispatch(a.logIn(find.id))
-                changeComponent()
-              }
-              else {
+            firestore.collection("users").where("userid", "==", userId).get().then((querySnapshot) => {
+              if (querySnapshot.empty) {
                 changeMessage("User not found");
               }
-            }
-          })
+              else {
+                const find = querySnapshot.docs.find(x => x.id === e.target.user.value);
+                if (find) {
+                  dispatch(a.logIn(find.id))
+                  changeComponent()
+                }
+                else {
+                  changeMessage("User not found");
+                }
+              }
+            })
+          });
         });
         break;
       case "Sign Up":
         auth.createUserWithEmailAndPassword(e.target.email.value, e.target.password.value).then(() => {
-          firestore.collection("users").doc(e.target.user.value).set({ userid: firebase.auth().currentUser.uid }, { merge: true });
+          firestore.collection("users").doc(e.target.user.value).set({ userid: firebase.auth().currentUser.uid, email: e.target.email.value, user: e.target.user.value }, { merge: true });
           dispatch(a.logIn(e.target.user.value));
           changeComponent();
         }).catch((error) => {
@@ -63,25 +68,21 @@ function SecurityForm(props) {
             auth.signInWithEmailAndPassword(e.target.email.value, e.target.password.value).then(() => {
               const userId = firebase.auth().currentUser.uid;
               firestore.collection("users").doc(e.target.user.value).get().then((snapshot) => {
-                console.log(snapshot);
                 if (!snapshot.exists) {
-                  firestore.collection("users").doc(e.target.user.value).set({ user: e.target.user.value, userid: userId }, { merge: true });
+                  firestore.collection("users").doc(e.target.user.value).set({ user: e.target.user.value, userid: userId, email: e.target.email.value }, { merge: true });
                   dispatch(a.logIn(e.target.user.value));
                   changeComponent();
                 }
-
               })
             })
           }
         })
-
         break;
       case "Reset Password":
       default:
         firebase.auth().sendPasswordResetEmail(e.target.email.value)
           .then(() => {
-            // Password reset email sent!
-            // ..
+            console.log("reset success");
           })
           .catch((error) => {
             var errorCode = error.code;
@@ -91,8 +92,6 @@ function SecurityForm(props) {
         return;
     }
   }
-
-
 
   const formStyle = {
     width: "250px"
@@ -118,10 +117,6 @@ function SecurityForm(props) {
             <div style={inputStyles}>
               <label>Username</label>
               <input name="user" type="text" />
-            </div>
-            <div style={inputStyles}>
-              <label>Email</label>
-              <input name="email" type="email" />
             </div>
             <div style={inputStyles}>
               <label>Password</label>

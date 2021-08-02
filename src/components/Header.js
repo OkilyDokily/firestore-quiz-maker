@@ -59,6 +59,7 @@ function Header() {
 
     firebase.auth().signOut().then(() => {
       dispatch(a.logOut())
+      dispatch(a.changeComponent("Security"));
     }).catch((error) => {
       // An error happened.
     });

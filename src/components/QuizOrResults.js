@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {useFirestoreConnect, isLoaded } from 'react-redux-firebase';
+import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import { useSelector, useDispatch } from 'react-redux';
 import QuizResults from './QuizResults';
 import Quiz from './Quiz';
@@ -23,8 +23,6 @@ function QuizOrResults(props) {
     { collection: 'users', doc: maker, subcollections: [{ collection: 'made', doc: id }], storeAs: "quiz" + maker },
     { collection: 'users', doc: maker, subcollections: [{ collection: 'made', doc: id, subcollections: [{ collection: "submitted", doc: loggedIn }] }], storeAs: "submitted" + loggedIn },
   ]);
-
-
 
   const quiz = useSelector(state => state.firestore.ordered["quiz" + maker]);
 
@@ -51,7 +49,7 @@ function QuizOrResults(props) {
   }
 
 
-  if (isLoaded(givenAnswers) && givenAnswers !== null && givenAnswers.length > 0 && isLoaded(quiz) && quiz !== undefined) {
+  if (isLoaded(givenAnswers) && givenAnswers !== null && givenAnswers.length > 0 && isLoaded(quiz) && quiz !== undefined && quiz.length !== 0) {
 
     const q = quiz[0];
     const g = givenAnswers[0];
@@ -68,9 +66,9 @@ function QuizOrResults(props) {
     )
   }
   else
-    if (isLoaded(quiz) && quiz !== undefined) {
+    if (isLoaded(quiz) && quiz !== undefined && quiz.length !== 0) {
       const q = quiz[0];
-
+      console.log(quiz);
       return (
         <React.Fragment>
           <Quiz quiz={q} maker={maker} user={loggedIn} reload={reloadAfterFinishTest} />
@@ -80,6 +78,17 @@ function QuizOrResults(props) {
           </button>
         </React.Fragment>
 
+      )
+    }
+    else if (quiz !== undefined && quiz.length === 0) {
+
+      return (
+        <div>
+          This Quiz is not available.
+          <button onClick={dashBoardOrSecurity} type="button">
+            Exit Quiz
+          </button>
+        </div>
       )
     }
     else {
